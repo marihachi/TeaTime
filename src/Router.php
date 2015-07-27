@@ -44,7 +44,8 @@ class Router
 		}
 		else
 		{
-			echo "404 - Page Not Found.";
+			$skinny = new Skinny();
+			$skinny->SkinnyDisplay("views/404.html");
 		}
 	}
 }

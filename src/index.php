@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(-1);
-
 // Includes
 require_once("Core.php");
 require_once("Router.php");
@@ -11,10 +9,16 @@ $webRouter = new Router();
 
 // ルートを追加して使用するパラメータを編集
 $webRouter->Add("/", "views/home.html", function($params) {
-	return array();
+	return null;
 });
 $webRouter->Add("/user", "views/user.html", function($params) {
-	return array();
+	$p = array();
+	$p["userId"] = array_key_exists("id", $params)
+		? ($params["id"]+0 >= 1)
+			? ($params["id"]+0)
+			: -1
+		: -1;
+	return $p;
 });
 
 // ルーティング
