@@ -7,16 +7,16 @@ class Core
 		if (!self::$instance) { self::$instance = new Core(); }
 		return self::$instance;
 	}
-    private static $instance;
+	private static $instance;
 	final function __clone()
-    {
-        throw new \Exception('Clone is not allowed against' . get_class($this));
-    }
+	{
+		throw new \Exception('Clone is not allowed against' . get_class($this));
+	}
 	private function __construct()
 	{
 	}
 
-    // 現在のURLから基となるURLを取得します。
+	// 現在のURLから基となるURLを取得します。
 	public function GetBaseUrl()
 	{
 		$scriptName = $_SERVER['SCRIPT_NAME'];
@@ -30,13 +30,13 @@ class Core
 		return '';
 	}
 
-    // 現在のURLからパス情報を取得します。
+	// 現在のURLからパス情報を取得します。
 	public function GetPathInfo()
 	{
 		$baseUrl = $this->GetBaseUrl();
 		$requestUri = $_SERVER['REQUEST_URI'];
 
-        // クエリを取り除く
+		// クエリを取り除く
 		if(false !== ($pos = strpos($requestUri, '?')))
 			$requestUri = substr($requestUri, 0, $pos);
 
