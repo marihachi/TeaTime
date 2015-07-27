@@ -34,7 +34,7 @@ class Router
 
 		if ($pathStr === "")
 			$pathStr ="/";
-
+		
 		if($this->RoutesList[$pathStr])
 		{
 			$getParam = $_GET;

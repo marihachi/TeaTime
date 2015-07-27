@@ -1,8 +1,8 @@
 <?php
 
 // Includes
-require_once("Core.php");
-require_once("Router.php");
+require_once("module/Core.php");
+require_once("module/Router.php");
 
 // Webのルータを生成
 $webRouter = new Router();
