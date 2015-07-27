@@ -14,11 +14,38 @@ class Router
 	}
 	private function __construct()
 	{
+		$this->RoutesList = array();
+	}
+
+	private $RoutesList;
+
+	// ルートを追加します。
+	public function Add($route, $action)
+	{
+		$this->RoutesList[$route] = $action;
 	}
 
 	// ルーティングをします。
 	public function Routing()
 	{
-		echo "This is Router";
+		$pathArray = explode("/", Core::Instance()->GetPathInfo());
+
+		// 最後の要素が空要素なら削除
+		$lastItem = count($pathArray) - 1;
+		if($pathArray[$lastItem] === "")
+			unset($pathArray[$lastItem]);
+
+		$pathStr = join("/", $pathArray);
+		
+		if ($pathStr === "")
+			$pathStr ="/";
+
+		if($this->RoutesList[$pathStr]){
+			$this->RoutesList[$pathStr]();
+		}
+		else
+		{
+			echo "404 - Page Not Found.";
+		}
 	}
 }
