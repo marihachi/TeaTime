@@ -16,20 +16,16 @@ require_once("module/Router.php");
 $router = Router::Instance();
 
 // ルート追加 & パラメータ編集
-$router->Add("get", "/", function($render, $params) {
+$router->Add("get", "/", function($render, $routeParams) {
 	if($params["login"] == "true")
 		$render->SkinnyDisplay("views/home.html", null);
 	else
 		$render->SkinnyDisplay("views/entrance.html", null);
 });
 
-$router->Add("get", "/user", function($render, $params) {
+$router->Add("get", "/:screenName", function($render, $routeParams) {
 	$p = array();
-	$p["userId"] = array_key_exists("id", $params)
-		? ($params["id"]+0 >= 1)
-			? ($params["id"]+0)
-			: -1
-		: -1;
+	$p["userId"] = $routeParams["screenName"];
 	$render->SkinnyDisplay("views/user.html", $p);
 });
 

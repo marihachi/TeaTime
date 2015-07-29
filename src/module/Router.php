@@ -24,47 +24,82 @@ class Router
 
 	// ルートを追加します。
 	public function Add($method, $route, $action)
-	{		
-		$this->RouteActionList[$route]["action"] = $action;
-		$this->RouteActionList[$route]["method"] = $method;
+	{
+		// メタ文字の使用文字をエスケープ
+		$route = str_replace("\\", "\\\\", $route);
+		$route = str_replace("^", "\^", $route);
+		$route = str_replace(".", "\.", $route);
+		$route = str_replace("$", "\$", $route);
+		$route = str_replace("*", "\*", $route);
+		$route = str_replace("?", "\?", $route);
+		$route = str_replace("+", "\+", $route);
+		$route = str_replace("/", "\/", $route);
+		$route = str_replace("(", "\(", $route);
+		$route = str_replace(")", "\)", $route);
+		$route = str_replace("[", "\[", $route);
+		$route = str_replace("]", "\]", $route);
+		$route = str_replace("{", "\{", $route);
+		$route = str_replace("}", "\}", $route);
+
+		// ルートパラメータを正規表現に置換
+		$regexRoute = preg_replace("/\/:[^\/:]+/", "/([^\\/]+)", $route);
+
+		// ルートパラメータの名前を抽出して配列を構築
+		preg_match_all("/\/:([^\/:]+)/", $route, $matchResult, PREG_SET_ORDER);
+		$params = array();
+		foreach($matchResult as $item)
+			$params[] = $item[1];
+
+		// ルート情報の配列を構築
+		$routeInfo = array();
+		$routeInfo["regexRoute"] = "/^".$regexRoute."$/";
+		$routeInfo["params"] = $params;
+		$routeInfo["action"] = $action;
+		$routeInfo["method"] = strtoupper($method);
+
+		// ルートリストに追加
+		$this->RouteList[] = $routeInfo;
 	}
 
 	// ルーティングと表示処理をします。
 	public function Routing()
 	{
-		$pathArray = explode("/", Core::Instance()->GetPathInfo());
+		// パスの階層を配列に変換
+		$pathArray = explode("/", strtolower(Core::Instance()->GetPathInfo()));
 
 		// 最後の要素が空要素なら削除
 		$lastItem = count($pathArray) - 1;
-
 		if($pathArray[$lastItem] === "")
 			unset($pathArray[$lastItem]);
 
+		// スラッシュでパスを再構成
 		$pathStr = join("/", $pathArray);
 
 		if ($pathStr === "")
 			$pathStr ="/";
 
-		if($this->RouteActionList[$pathStr])
+		foreach($this->RouteList as $routeInfo)
 		{
-			switch ($this->RouteActionList[$pathStr]["method"])
+			if (preg_match($routeInfo["regexRoute"], $pathStr) == 1 && $routeInfo["method"] == $_SERVER['REQUEST_METHOD'])
 			{
-				case "get":
-					$getParam = $_GET;
-					break;
-				case "post":
-					$getParam = $_POST;
-					break;
-				default:
-					throw new \Exception('Unknown method type');
+				preg_match_all($routeInfo["regexRoute"], $pathStr, $matchResult);
+				
+				$params = array();
+				if ($matchResult[1] !== NULL)
+				{
+					$i = 0;
+					foreach($matchResult[1] as $item)
+					{
+						$params[$routeInfo["params"][$i+0]] = $item;
+						$i++;
+					}
+				}
+				$skinny = new Skinny();
+				$routeInfo["action"]($skinny, count($params) != 0 ? $params : null);
+				return;
 			}
-			$skinny = new Skinny();
-			$this->RouteActionList[$pathStr]["action"]($skinny, $getParam);
 		}
-		else
-		{
-			$skinny = new Skinny();
-			$skinny->SkinnyDisplay("views/404.html");
-		}
+		$skinny = new Skinny();
+		$skinny->SkinnyDisplay("views/404.html");
 	}
 }
