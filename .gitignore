@@ -1,0 +1,3 @@
+src/user_guide/
+src/application/config/*
+!src/application/config/routes.php
