@@ -15,6 +15,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</head>
 	<body>
 		<p>ユーザーページです。 (id: <% echo(userId) %>)</p>
-		<p><a href=/tea-time/>ホームへ</a></p>
+		<p><a href=/tea-time>ホームへ</a></p>
 	</body>
 </html>
