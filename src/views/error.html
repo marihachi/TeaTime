@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset=UTF-8>
+		<title>Code:<% echo(errorCode) %> <% echo(message) %> - TeaTime | ティータイムにピッタリなSNS</title>
+		<style>
+			body {
+				text-align: center;
+				background: #264B74;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<h1><% echo(errorCode) %> - <% echo(message) %></h1>
+		<h2>Place</h2>
+		<p><% echo(place) %></p>
+		<h2>Trace</h2>
+		<% each(trace) %>
+		<p>place: <% echo(trace/file) %> : <% echo(trace/line) %>,<br />
+		class: <% echo(trace/class) %>,<br />
+		type: <% if(trace/type,==,"->") %>instanceAccess<% else %>classAccess<% /if %>,<br />
+		args: <% each(trace/args) %><% echo(trace/args) %><% /each %></p>
+		<% /each %>
+		<p><a href=/tea-time/>ホームへ</a></p>
+	</body>
+</html>

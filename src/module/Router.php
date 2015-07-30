@@ -1,6 +1,6 @@
 <?php
 
-include_once("Skinny.php");
+require_once("Skinny.php");
 
 class Router
 {
@@ -25,7 +25,7 @@ class Router
 	// ルートを追加します。
 	public function Add($method, $route, $action)
 	{
-		// メタ文字の使用文字をエスケープ
+		// 正規表現のメタ文字をエスケープ
 		$route = str_replace("\\", "\\\\", $route);
 		$route = str_replace("^", "\^", $route);
 		$route = str_replace(".", "\.", $route);
@@ -65,7 +65,7 @@ class Router
 	public function Routing()
 	{
 		// パスの階層を配列に変換
-		$pathArray = explode("/", strtolower(Core::Instance()->GetPathInfo()));
+		$pathArray = explode("/", strtolower($this->GetPathInfo()));
 
 		// 最後の要素が空要素なら削除
 		$lastItem = count($pathArray) - 1;
@@ -83,7 +83,7 @@ class Router
 			if (preg_match($routeInfo["regexRoute"], $pathStr) == 1 && $routeInfo["method"] == $_SERVER['REQUEST_METHOD'])
 			{
 				preg_match_all($routeInfo["regexRoute"], $pathStr, $matchResult);
-				
+
 				$params = array();
 				if ($matchResult[1] !== NULL)
 				{
@@ -94,12 +94,53 @@ class Router
 						$i++;
 					}
 				}
-				$skinny = new Skinny();
-				$routeInfo["action"]($skinny, count($params) != 0 ? $params : null);
+				$routeInfo["action"](count($params) != 0 ? $params : null);
 				return;
 			}
 		}
 		$skinny = new Skinny();
 		$skinny->SkinnyDisplay("views/404.html");
+	}
+
+	public function ErrorHandle($exception)
+	{
+		$param = array(
+			"errorCode" => $exception->getCode(),
+			"message" => $exception->getMessage(),
+			"trace" => $exception->getTrace(),
+			"place" => $exception->getFile()." : ".$exception->getLine());
+
+		$skinny = new Skinny();
+		$skinny->SkinnyDisplay("views/error.html", $param);
+	}
+
+	// 現在のURLから基となるURLを取得します。
+	public function GetBaseUrl()
+	{
+		$scriptName = $_SERVER['SCRIPT_NAME'];
+		$requestUri = $_SERVER['REQUEST_URI'];
+
+		if(0 === strpos($requestUri, $scriptName))
+			return $scriptName;
+		else if(0 === strpos($requestUri, dirname($scriptName)))
+			return rtrim(dirname($scriptName), '/');
+
+		return '';
+	}
+
+	// 現在のURLからパス情報を取得します。
+	public function GetPathInfo()
+	{
+		$baseUrl = $this->GetBaseUrl();
+		$requestUri = $_SERVER['REQUEST_URI'];
+
+		// クエリを取り除く
+		if(false !== ($pos = strpos($requestUri, '?')))
+			$requestUri = substr($requestUri, 0, $pos);
+
+		// ベースURLを取り除く
+		$pathInfo = (string)substr($requestUri, strlen($baseUrl));
+
+		return $pathInfo;
 	}
 }
