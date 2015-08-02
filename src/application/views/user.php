@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</head>
 	<body>
 		<main>
+			<img src="a<?php echo $user["screenName"];?>a">
 			<p><?php echo $user["name"]."(@".$user["screenName"].")";?></p>
 			<p>bio: <?php echo $user["bio"];?></p>
 			<p>Lv: <?php echo $user["lv"];?></p>

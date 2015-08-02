@@ -1,25 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserPage extends CI_Controller
+class UserController extends CI_Controller
 {
-	public function index()
+	public function index($screenName)
 	{
-		$screenName = $this->uri->segment(1);
-		
 		$this->load->model('User_model', 'UserModel', TRUE);
-		$resUser = $this->UserModel->FindByScreenName($screenName);
 
-		if ($resUser !== null)
+		if ($resUser = $this->UserModel->FindByScreenName($screenName))
 		{
 			$data = array();
-			$data['screenName'] = $resUser->screenName;
+			$data['screenName'] = $resUser->screen_name;
 			$data['name'] = $resUser->name;
 			$data['bio'] = $resUser->bio;
 			$data['lv'] = $resUser->lv;
 			$data['exp'] = $resUser->exp;
-			$data['headerUrl'] = '';
-			$data['iconUrl'] = '';
 
 			$user = array();
 			$user['user'] = $data;

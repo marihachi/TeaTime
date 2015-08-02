@@ -44,6 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</ul>
 		</nav>
 		<p>TeaTimeへようこそ</p>
-		<p><a href=/user>ユーザーページへ</a></p>
+		<p>ユーザーリスト</p>
+		<p><a href=/tea-time/mrhc>まりはち</a></p>
 	</body>
 </html>

@@ -3,39 +3,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
-	public function Insert($screenName, $name, $bio)
+	public function Create($screen_name, $password, $name, $bio)
 	{
-		$date = array();
-		$date["screenName"] = $screenName;
-		$date["name"] = $name;
-		$date["bio"] = $bio;
-		
-		$this->db->insert('tea_time_users', $date);
+		$data = array();
+		$data["screen_name"] = $screen_name;
+		$data["name"] = $name;
+		$data["bio"] = $bio;
+		$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
+
+		if(!$this->db->insert('tea_time_users', $data))
+		{
+			//$error = $this->db->error();
+			return false;
+		}
+		$query = $this->db->get_where('tea_time_users', array('screen_name' => $screen_name), 1);
+		return $query->result()[0];
 	}
 
-	public function Update($screenName = null, $name = null, $bio = null)
+	public function Update($screen_name = null, $name = null, $bio = null, $password = null)
 	{
-		$date = array();
-		if ($screenName !== null)
-			$date["screenName"] = $screenName;
+		$data = array();
+		if ($screen_name !== null)
+			$data["screen_Name"] = $screen_name;
 		if ($name !== null)
-			$date["name"] = $name;
+			$data["name"] = $name;
 		if ($bio !== null)
-			$date["bio"] = $bio;
-		
-		$this->db->update('tea_time_users', $date);
+			$data["bio"] = $bio;
+		if ($password !== null)
+			$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
+
+		$this->db->update('tea_time_users', $data);
 	}
 
-	public function FindByScreenName($screenName)
+	public function FindByScreenName($screen_name)
 	{
-		$query = $this->db->get_where('tea_time_users', array('screenName' => $screenName), 1);
+		$data = array();
+		$data["screen_name"] = $screen_name;
+		
+		$query = $this->db->get_where('tea_time_users', $data, 1);
 		if ($query->num_rows() > 0)
 		{
 			return $query->result()[0];
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 	}
 
@@ -49,7 +61,7 @@ class User_model extends CI_Model
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 	}
 }

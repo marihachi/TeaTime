@@ -14,8 +14,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</style>
 	</head>
 	<body>
-		<h1>TeaTimeへようこそ</h1>
-		<p>ログインもしくはサインアップしてください。</p>
-		<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
+		<header>
+			
+		</header>
+		<main>
+			<nav>
+				<h1>TeaTimeへようこそ</h1>
+				<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
+				<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
+			</nav>
+			<div id=login-box>
+
+			</div>
+		</main>
+		<footer>
+			(c)2015 TeaTime.
+		</footer>
 	</body>
 </html>
