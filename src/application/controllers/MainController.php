@@ -10,6 +10,9 @@ class MainController extends CI_Controller
 		if ($isLogin)
 		{
 			$data = array();
+			$data['is_login'] = $this->session->userdata('is_login');
+			$data['screen_name'] = $this->session->userdata('screen_name');
+			$data['name'] = $this->session->userdata('name');
 			$data['user_id'] = $this->session->userdata('user_id');
 			$this->load->view('home', $data);
 		}
