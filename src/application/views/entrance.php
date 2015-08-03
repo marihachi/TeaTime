@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
-<html lang="jp">
+<html lang=jp>
 	<head>
 		<meta charset=UTF-8 />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv=X-UA-Compatible content="IE=edge" />
+		<meta name=viewport content="width=device-width, initial-scale=1" />
 		<title>TeaTime | ティータイムにピッタリなSNS</title>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+		<link href=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css rel=stylesheet />
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
+		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<style>
 			body {
 				background: #D59B6D;
@@ -22,8 +22,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				margin: 0 auto;
 				width: 800px;	
 			}
+			header {
+			}
 			main {
-				
+			}
+			footer {
+				text-align: center;
+				padding: 10px;
+			}
+			.form-control {
+				background-color: rgba(255, 255, 255, 0.8);
 			}
 		</style>
 	</head>
@@ -38,14 +46,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</nav>
 			<div id=login-box>
 				<form>
-					<div class="input-group">
-						<span class="input-group-addon">ユーザー名</span>
+					<div class=input-group>
+						<span class=input-group-addon>ユーザー名</span>
 						<input type=text class=form-control>
 					</div>
-					<div class="input-group">
-						<span class="input-group-addon">パスワード</span>
+					<div class=input-group>
+						<span class=input-group-addon>パスワード</span>
 						<input type=password class=form-control>
-						<span class="input-group-btn">
+						<span class=input-group-btn>
 							<input id=login-button class="btn btn-primary" type=submit value="ログイン">
 						</span>
 					</div>
