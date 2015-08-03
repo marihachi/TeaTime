@@ -51,6 +51,8 @@ class WebAPI_AccountController extends CI_Controller
 		}
 		else
 		{
+			header("Content-Type: application/json; charset=utf-8");
+			
 			http_response_code(400);
 			$info['error']['code'] = 100;
 			$info['error']['message'] = 'Unknown file type.';
@@ -64,6 +66,8 @@ class WebAPI_AccountController extends CI_Controller
 
 		if (preg_match('/^(json)$/i', $extention) === 1)
 		{
+			header("Content-Type: application/json; charset=utf-8");
+			
 			$post = $this->input->post();
 			if (array_key_exists('screen_name', $post) && array_key_exists('password', $post))
 			{
@@ -112,6 +116,8 @@ class WebAPI_AccountController extends CI_Controller
 		}
 		else
 		{
+			header("Content-Type: application/json; charset=utf-8");
+			
 			http_response_code(400);
 			$info['error']['code'] = 100;
 			$info['error']['message'] = 'Unknown file type.';
