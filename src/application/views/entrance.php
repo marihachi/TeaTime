@@ -19,6 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$orange1 = "#FF9A00";
 				$orange2 = "#FFAD33";
 			?>
+			* {
+				font-family: "Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","Meiryo UI","Meiryo, メイリオ","sans-serif";
+			}
 			.jumbotron {
 				background: url("/tea-time/bg002.jpg");
 				background-position: center center;
@@ -66,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			#main-article, #login-box {
 				background-color: rgba(255, 173, 67, 0.62);
 				margin: 10px;
-				padding: 10px;
+				padding: 20px;
 				border-radius: 5px;
 				color: #fff;
 			}
