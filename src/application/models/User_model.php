@@ -43,7 +43,8 @@ class User_model extends CI_Model
 		$query = $this->db->get_where('tea_time_users', $data, 1);
 		if ($query->num_rows() > 0)
 		{
-			return $query->result()[0];
+			$user = $query->result()[0];
+			return $user;
 		}
 		else
 		{
