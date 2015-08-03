@@ -15,53 +15,81 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
 		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<style>
-			body {
-				background: #D59B6D;
+			<?php
+				$orange1 = "#FF9A00";
+				$orange2 = "#FFAD33";
+			?>
+			body.jumbotron {
+				background: url("/tea-time/bg002.jpg");
+				background-position: center center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				color: #fff;
 			}
-			header, main, footer {
-				margin: 0 auto;
-				width: 800px;	
+			a {
+				color: #FFC028;
 			}
-			header {
+			a:focus {
+				outline: thin dotted;
+				outline-offset: -2px;
 			}
-			main {
+			a:focus, a:hover {
+				color: #FFC028;
+				text-decoration: underline;
 			}
 			footer {
 				text-align: center;
 				padding: 10px;
 			}
 			.form-control {
-				background-color: rgba(255, 255, 255, 0.8);
+				color: #555;
+				background-color: rgba(255, 255, 255, 0.6);
+				box-shadow: none;
+			}
+			.form-control:focus {
+				border-color: <?= $orange1?>;
+				box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251,152,0,0.6);
+			}
+			.btn-orange {
+				color: #FFF;
+				background-color: <?= $orange2?>;
+				border-color: <?= $orange1?>;
+			}
+			.btn-orange:focus, .btn-orange:hover {
+				color: #EEE;
+				/*background-color: <?= $orange2?>;
+				border-color: <?= $orange1?>;*/
 			}
 		</style>
 	</head>
-	<body>
-		<header>
-			<h1>TeaTimeへようこそ</h1>
-		</header>
-		<main>
-			<nav>
-				<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
-				<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
-			</nav>
-			<div id=login-box>
-				<form>
-					<div class=input-group>
-						<span class=input-group-addon>ユーザー名</span>
-						<input type=text class=form-control>
-					</div>
-					<div class=input-group>
-						<span class=input-group-addon>パスワード</span>
-						<input type=password class=form-control>
-						<span class=input-group-btn>
-							<input id=login-button class="btn btn-primary" type=submit value="ログイン">
-						</span>
-					</div>
-				</form>
-			</div>
-		</main>
-		<footer>
-			<small>(c)2015 TeaTime.</small>
-		</footer>
+	<body class="jumbotron">
+		<div class=container>
+			<header>
+				<h1>TeaTimeへようこそ</h1>
+			</header>
+			<main class=row>
+				<nav class=col-md-8>
+					<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
+					<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
+				</nav>
+				<div class=col-md-4 id=login-box>
+					<form>
+						<div class="form-group">
+							<label class="control-label" for="username-box">ユーザー名</label>
+							<input type=text class=form-control id=username-box>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="password-box">パスワード</label>
+							<input type=password class=form-control id=password-box>
+						</div>
+						<button id=login-button class="btn btn-orange" type=submit>ログイン</button>
+					</form>
+				</div>
+			</main>
+			<footer>
+				<small>(c)2015 TeaTime.</small>
+			</footer>
+		</div>
 	</body>
 </html>
