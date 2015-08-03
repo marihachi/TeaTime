@@ -76,7 +76,7 @@ class WebAPI_AccountController extends CI_Controller
 				$screenName = urldecode($post['screen_name']);
 				$passwordHash = password_hash(urldecode($post['password']), PASSWORD_BCRYPT);
 
-				if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1 && preg_match('/^[a-z0-9_-]+$/i', $passwordHash) === 1)
+				if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 				{
 					if ($resUser = $this->UserModel->FindByScreenName($screenName))
 					{
