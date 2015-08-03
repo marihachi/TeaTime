@@ -118,7 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<input type=password class=form-control id=password-box name=password>
 						</div>
 						<label id=login-message></label>
-						<button id=login-button class="btn btn-orange" type=submit>ログイン</button>
+						<input id=login-button class="btn btn-orange" type=submit value="ログイン">
 					</form>
 				</div>
 			</div>

@@ -65,7 +65,7 @@ class API_AccountController extends CI_Controller
 		if (preg_match('/^(json)$/i', $extention) === 1)
 		{
 			$post = $this->input->post();
-			if (array_key_exists('screen_name', $post) && array_key_exists('password', $post)
+			if (array_key_exists('screen_name', $post) && array_key_exists('password', $post))
 			{
 				$this->load->model('User_model', 'UserModel', TRUE);
 
