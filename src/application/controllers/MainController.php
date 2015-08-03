@@ -5,8 +5,18 @@ class MainController extends CI_Controller
 {
 	public function index()
 	{
-		$this->load->view('entrance');
-		//$this->load->view('home');
+		$isLogin = $this->session->userdata('is_login');
+		
+		if ($isLogin)
+		{
+			$data = array();
+			$data['user_id'] = $this->session->userdata('user_id');
+			$this->load->view('home', $data);
+		}
+		else
+		{
+			$this->load->view('entrance');
+		}
 	}
 	
 	public function newAccount()

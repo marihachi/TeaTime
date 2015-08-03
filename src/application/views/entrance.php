@@ -14,6 +14,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<![endif]-->
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
 		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
+		<script>
+			$(function() {
+				$('#login-form').submit(function(event) {
+					event.preventDefault();
+					$.ajax(
+						$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/login.json", {
+						type: 'post',
+						data: $(this).serialize(),
+						dataType: 'json',
+						xhrFields: {
+							withCredentials: true
+						}
+					}).done(function(){
+						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
+					}).fail(function(){
+						$('#login-message').text("ログインに失敗しました");
+					});
+				});
+			});
+		</script>
 		<style>
 			<?php
 				$orange1 = "#FF9A00";
@@ -88,15 +108,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 			<div class=col-md-4>
 				<div id=login-box class=container>
-					<form>
+					<form id=login-form>
 						<div class="form-group">
 							<label class="control-label" for="username-box">ユーザー名</label>
-							<input type=text class=form-control id=username-box>
+							<input type=text class=form-control id=username-box name=screen_name>
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="password-box">パスワード</label>
-							<input type=password class=form-control id=password-box>
+							<input type=password class=form-control id=password-box name=password>
 						</div>
+						<label id=login-message></label>
 						<button id=login-button class="btn btn-orange" type=submit>ログイン</button>
 					</form>
 				</div>
