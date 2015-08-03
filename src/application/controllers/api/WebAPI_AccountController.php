@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class API_AccountController extends CI_Controller
+class WebAPI_AccountController extends CI_Controller
 {
 	public function generate($extention)
 	{
