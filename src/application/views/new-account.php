@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				$('#account-create-form').submit(function(event) {
 					event.preventDefault();
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/account/generate.json", {
+					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/generate.json", {
 						type: 'post',
 						data: $(this).serialize(),
 						dataType: 'json',
