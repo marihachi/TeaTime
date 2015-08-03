@@ -18,8 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				$('#login-form').submit(function(event) {
 					event.preventDefault();
-					$.ajax(
-						$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/login.json", {
+					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/login.json", {
 						type: 'post',
 						data: $(this).serialize(),
 						dataType: 'json',
