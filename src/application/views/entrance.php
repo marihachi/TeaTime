@@ -25,7 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				background-size: cover;
 				background-repeat: no-repeat;
 				background-attachment: fixed;
-				color: #fff;
 			}
 			a {
 				color: rgb(255, 100, 242);
@@ -42,6 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				text-align: center;
 				padding: 10px;
 			}
+			footer small {
+				color: #AAA;
+			}
 			.form-control {
 				color: #555;
 				background-color: rgba(255, 255, 255, 0.6);
@@ -55,6 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: #FFF;
 				background-color: <?= $orange2?>;
 				border-color: <?= $orange1?>;
+				padding: 7px 20px;
 			}
 			.btn-orange:focus, .btn-orange:active, .btn-orange:hover {
 				color: #EEE;
@@ -65,6 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				margin: 10px;
 				padding: 10px;
 				border-radius: 5px;
+				color: #fff;
 			}
 		</style>
 	</head>
