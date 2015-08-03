@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$orange1 = "#FF9A00";
 				$orange2 = "#FFAD33";
 			?>
-			body.jumbotron {
+			.jumbotron {
 				background: url("/tea-time/bg002.jpg");
 				background-position: center center;
 				background-size: cover;
@@ -28,14 +28,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: #fff;
 			}
 			a {
-				color: #FFC028;
+				color: rgb(255, 100, 242);
 			}
 			a:focus {
 				outline: thin dotted;
 				outline-offset: -2px;
 			}
 			a:focus, a:hover {
-				color: #FFC028;
+				color: rgb(255, 155, 247);
 				text-decoration: underline;
 			}
 			footer {
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			.form-control:focus {
 				border-color: <?= $orange1?>;
-				box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251,152,0,0.6);
+				box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(251, 152, 0, 0.6);
 			}
 			.btn-orange {
 				color: #FFF;
@@ -60,19 +60,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: #EEE;
 				outline: none !important;
 			}
+			#main-article, #login-box {
+				background-color: rgba(255, 173, 67, 0.62);
+				margin: 10px;
+				padding: 10px;
+				border-radius: 5px;
+			}
 		</style>
 	</head>
-	<body class="jumbotron">
-		<div class=container>
+	<body class="container jumbotron">
+		<main class=row>
 			<header>
-				<h1>TeaTimeへようこそ</h1>
 			</header>
-			<main class=row>
-				<nav class=col-md-8>
+			<div class=col-md-8>
+				<article id=main-article class=container>
+					<h1>TeaTimeへようこそ</h1>
 					<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
 					<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
-				</nav>
-				<div class=col-md-4 id=login-box>
+				</article>
+			</div>
+			<div class=col-md-4>
+				<div id=login-box class=container>
 					<form>
 						<div class="form-group">
 							<label class="control-label" for="username-box">ユーザー名</label>
@@ -85,10 +93,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<button id=login-button class="btn btn-orange" type=submit>ログイン</button>
 					</form>
 				</div>
-			</main>
-			<footer>
-				<small>(c)2015 TeaTime.</small>
-			</footer>
-		</div>
+			</div>
+		</main>
+		<footer>
+			<small>(c)2015 TeaTime.</small>
+		</footer>
 	</body>
 </html>
