@@ -9,37 +9,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<title>TeaTime | ティータイムにピッタリなSNS</title>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" />
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js" />
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" />
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<style>
 			body {
-				padding: 0;
-				margin: 0;
-				text-align: center;
 				background: #D59B6D;
-				/*color: #fff;*/
 			}
-			header {
-				
-			}
-			header h1 {
-				font-size: 20px;
+			header, main, footer {
+				margin: 0 auto;
+				width: 800px;	
 			}
 			main {
-				margin: 0 auto;
-				width: 800px;
-			}
-			main nav {
-				float: left;
-			}
-			#login-box {
-				float: right;
-			}
-			
-			footer {
 				
 			}
 		</style>
@@ -48,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<header>
 			<h1>TeaTimeへようこそ</h1>
 		</header>
-		<main class=clear>
+		<main>
 			<nav>
 				<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
 				<p>現在TeaTimeは運用に向けて開発中です。お待ちください。</p>
