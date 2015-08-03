@@ -74,13 +74,14 @@ class WebAPI_AccountController extends CI_Controller
 				$this->load->model('User_model', 'UserModel', TRUE);
 
 				$screenName = urldecode($post['screen_name']);
-				$passwordHash = password_hash(urldecode($post['password']), PASSWORD_BCRYPT);
+				$password = urldecode($post['password']);
 
 				if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 				{
+					$isSuccess = false;
 					if ($resUser = $this->UserModel->FindByScreenName($screenName))
 					{
-						if ($passwordHash === $resUser->password_hash)
+						if (password_verify($password, $resUser->password_hash))
 						{
 							$isSuccess = true;
 							
@@ -90,6 +91,8 @@ class WebAPI_AccountController extends CI_Controller
 							$data['name'] = $resUser->name;
 							$data['user_id'] = $resUser->id;
 							$this->session->set_userdata($data);
+							
+							$info['message'] = "Login successful.";
 						}
 					}
 					
