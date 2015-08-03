@@ -56,10 +56,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				background-color: <?= $orange2?>;
 				border-color: <?= $orange1?>;
 			}
-			.btn-orange:focus, .btn-orange:hover {
+			.btn-orange:focus, .btn-orange:active, .btn-orange:hover {
 				color: #EEE;
-				/*background-color: <?= $orange2?>;
-				border-color: <?= $orange1?>;*/
+				outline: none !important;
 			}
 		</style>
 	</head>
