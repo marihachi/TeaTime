@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class=col-md-8>
 				<article id=main-article class=container>
 					<h1>TeaTimeへようこそ</h1>
-					<p>ログインもしくは<a href=/tea-time/new-account>サインアップ</a>してください。</p>
+					<p>ログインもしくは<a href=/tea-time/signup>サインアップ</a>してください。</p>
 					<p>現在TeaTimeは運用に向けてオープンテスト中です。良かったらアカウント作ってね</p>
 				</article>
 			</div>

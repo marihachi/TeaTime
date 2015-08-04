@@ -22,8 +22,17 @@ class MainController extends CI_Controller
 		}
 	}
 	
-	public function newAccount()
+	public function signup()
 	{
-		$this->load->view('new-account');
+		$isLogin = $this->session->userdata('is_login');
+		
+		if ($isLogin)
+		{
+			show_error('既にログイン済みです。', 403);
+		}
+		else
+		{
+			$this->load->view('signup');
+		}
 	}
 }

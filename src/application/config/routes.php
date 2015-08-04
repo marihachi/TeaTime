@@ -53,8 +53,6 @@ $route['default_controller'] = 'MainController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 
-$route['new-account'] = 'MainController/newAccount';
-
 $route['(:any)'] = 'UserController/index/$1';
 $route['status/(:any)'] = 'StatusController/index/$1';
 
