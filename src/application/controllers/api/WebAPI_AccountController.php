@@ -3,10 +3,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class WebAPI_AccountController extends CI_Controller
 {
+	private function _checkReferer()
+	{
+		$this->load->library('user_agent');
+
+		if ($this->agent->is_referral() || $this->agent->referrer() === "")
+		{
+			http_response_code(403);
+			$info['error']['code'] = 300;
+			$info['error']['message'] = "Invalid referer.";
+			echo json_encode($info);
+			return false;
+		}
+		return true;
+	}
+	
 	public function generate()
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
+		if (!$this->_checkReferer())
+			return;
+		
 		$info = array();
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post) && array_key_exists('name', $post) && array_key_exists('bio', $post))
@@ -37,6 +55,7 @@ class WebAPI_AccountController extends CI_Controller
 							$data['screen_name'] = $screenName;
 							$data['name'] = $resUser->name;
 							$data['user_id'] = $resUser->id;
+							
 							$this->session->set_userdata($data);
 						}
 						else
@@ -76,6 +95,9 @@ class WebAPI_AccountController extends CI_Controller
 	public function login()
 	{
 		header("Content-Type: application/json; charset=utf-8");
+		
+		if (!$this->_checkReferer())
+			return;
 		
 		$info = array();
 		$post = $this->input->post();
@@ -126,6 +148,9 @@ class WebAPI_AccountController extends CI_Controller
 	public function logout()
 	{
 		header("Content-Type: application/json; charset=utf-8");
+		
+		if (!$this->_checkReferer())
+			return;
 		
 		$info = array();
 		
