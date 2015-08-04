@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<main>
 			<img src="/teatime/image/icon/<?php echo $user["screen_name"];?>">
 			<p><?php echo $user["name"]."(@".$user["screen_name"].")";?></p>
+			<button class="btn btn-defalut">フォロー</button>
 			<p>bio: <?php echo $user["bio"];?></p>
 			<p>Lv: <?php echo $user["lv"];?></p>
 			<p>Exp: <?php echo $user["exp"];?></p>
