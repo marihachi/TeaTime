@@ -6,7 +6,7 @@ class WebAPI_AccountController extends CI_Controller
 	public function generate()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		
+
 		$info = array();
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post) && array_key_exists('name', $post) && array_key_exists('bio', $post))
@@ -20,30 +20,55 @@ class WebAPI_AccountController extends CI_Controller
 
 			if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1 && preg_match('/^[a-z0-9_-]+$/i', $password) === 1 && preg_match('/^[^\s　]+$/u', $name) === 1)
 			{
-				if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
+				$isValidScreenName = false;
+				if (preg_match('/^[0-9]+$/i', $screenName) === 0)
 				{
-					unset($resUser->password_hash);
-					$info['user'] = $resUser;
+					if (count($screenName) >= 3 && count($screenName) <= 15)
+					{
+						if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
+						{
+							$isValidScreenName = true;
+
+							unset($resUser->password_hash);
+							$info['user'] = $resUser;
+
+							$data = array();
+							$data['is_login'] = true;
+							$data['screen_name'] = $screenName;
+							$data['name'] = $resUser->name;
+							$data['user_id'] = $resUser->id;
+							$this->session->set_userdata($data);
+						}
+						else
+						{
+							http_response_code(500);
+							$info['error']['code'] = 200;
+							$info['error']['message'] = 'Failed to execute.';
+						}
+					}
 				}
-				else
+				
+				if (!$isValidScreenName)
 				{
-					http_response_code(500);
+					// Invalid Screen Name
+					http_response_code(400);
 					$info['error']['code'] = 103;
-					$info['error']['message'] = 'Failed to execute.';
+					$info['error']['message'] = "Invalid parameter.";
+					$info['error']['parameter'] = "screen_name";
 				}
 			}
 			else
 			{
 				http_response_code(400);
-				$info['error']['code'] = 102;
-				$info['error']['message'] = "Value given for one or more parameter is invalid.";
+				$info['error']['code'] = 101;
+				$info['error']['message'] = "Some invalid parameters.";
 			}
 		}
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 101;
-			$info['error']['message'] = 'No value given for one or more required parameters.';
+			$info['error']['code'] = 100;
+			$info['error']['message'] = 'Some required parameters.';
 		}
 		echo json_encode($info);
 	}
@@ -61,9 +86,9 @@ class WebAPI_AccountController extends CI_Controller
 			$screenName = urldecode($post['screen_name']);
 			$password = urldecode($post['password']);
 
+			$isSuccess = false;
 			if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 			{
-				$isSuccess = false;
 				if ($resUser = $this->UserModel->FindByScreenName($screenName))
 				{
 					if (password_verify($password, $resUser->password_hash))
@@ -80,26 +105,20 @@ class WebAPI_AccountController extends CI_Controller
 						$info['message'] = "Login successful.";
 					}
 				}
-
-				if (!$isSuccess)
-				{
-					http_response_code(400);
-					$info['error']['code'] = 200;
-					$info['error']['message'] = "screen_name or password is invalid.";
-				}
 			}
-			else
+
+			if (!$isSuccess)
 			{
 				http_response_code(400);
-				$info['error']['code'] = 102;
-				$info['error']['message'] = "Value given for one or more parameter is invalid.";
+				$info['error']['code'] = 101;
+				$info['error']['message'] = "Some invalid parameters.";
 			}
 		}
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 101;
-			$info['error']['message'] = 'No value given for one or more required parameters.';
+			$info['error']['code'] = 100;
+			$info['error']['message'] = 'Some required parameters.';
 		}
 		echo json_encode($info);
 	}
@@ -118,8 +137,8 @@ class WebAPI_AccountController extends CI_Controller
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 201;
-			$info['error']['message'] = 'Not logged in.';
+			$info['error']['code'] = 200;
+			$info['error']['message'] = 'Failed to execute.';
 		}
 		echo json_encode($info);
 	}
