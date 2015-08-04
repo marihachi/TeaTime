@@ -119,15 +119,13 @@ class WebAPI_AccountController extends CI_Controller
 			{
 				if ($resUser = $this->AccountModel->FindByScreenName($screenName))
 				{
-					if (password_verify($password, $resUser->password_hash))
+					if (password_verify($password, $resUser['password_hash']))
 					{
 						$isSuccess = true;
 
 						$data = array();
 						$data['is_login'] = true;
-						$data['screen_name'] = $screenName;
-						$data['name'] = $resUser->name;
-						$data['user_id'] = $resUser->id;
+						$data['me'] = $resUser;
 						$this->session->set_userdata($data);
 
 						$info['message'] = "Login successful.";
