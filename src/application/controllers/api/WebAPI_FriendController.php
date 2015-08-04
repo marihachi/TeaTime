@@ -26,8 +26,8 @@ class WebAPI_FriendController extends CI_Controller
 			return;
 
 		$s_isLogin = $this->session->userdata('is_login');
-		$s_screenName = $this->session->userdata('screen_name');
-		$s_userId = $this->session->userdata('user_id');
+		$s_screenName = $this->session->userdata('me')['screen_name'];
+		$s_userId = $this->session->userdata('me')['id'];
 
 		$info = array();
 		if ($s_isLogin)
@@ -46,7 +46,7 @@ class WebAPI_FriendController extends CI_Controller
 						if ($resUser = $this->AccountModel->FindByScreenName($screenName))
 						{
 							$srcId = $s_userId;
-							$destId = $resUser->id;
+							$destId = $resUser['id'];
 
 							if ($isFollow)
 							{
