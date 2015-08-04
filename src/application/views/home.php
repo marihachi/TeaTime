@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</li>
 			</ul>
 		</nav>
-		<p>TeaTimeへようこそ <?= me['name'];?>さん</p>
+		<p>TeaTimeへようこそ <?= $me['name'];?>さん</p>
 		<form id=logout-form>
 			<input type=submit id=logout-button value="ログアウト">
 			<label id=logout-message></label>
