@@ -18,7 +18,7 @@ class WebAPI_FriendController extends CI_Controller
 		return true;
 	}
 
-	public function follow()
+	private function _followUnfollow($isFollow, $screenName)
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
@@ -27,7 +27,6 @@ class WebAPI_FriendController extends CI_Controller
 
 		$s_isLogin = $this->session->userdata('is_login');
 		$s_screenName = $this->session->userdata('screen_name');
-		$s_name = $this->session->userdata('name');
 		$s_userId = $this->session->userdata('user_id');
 
 		$info = array();
@@ -49,15 +48,31 @@ class WebAPI_FriendController extends CI_Controller
 							$srcId = $s_userId;
 							$destId = $resUser->id;
 
-							if ($this->FriendModel->Create($srcId, $destId))
+							if ($isFollow)
 							{
-								$info['message'] = 'Follow was successful.';
+								if ($this->FriendModel->Create($srcId, $destId))
+								{
+									$info['message'] = 'Follow was successful.';
+								}
+								else
+								{
+									http_response_code(500);
+									$info['error']['code'] = 105;
+									$info['error']['message'] = 'Failed to execute.';
+								}
 							}
 							else
 							{
-								http_response_code(500);
-								$info['error']['code'] = 105;
-								$info['error']['message'] = 'Failed to execute.';
+								if ($this->FriendModel->Destroy($srcId, $destId))
+								{
+									$info['message'] = 'UnFollow was successful.';
+								}
+								else
+								{
+									http_response_code(500);
+									$info['error']['code'] = 105;
+									$info['error']['message'] = 'Failed to execute.';
+								}
 							}
 						}
 						else
@@ -95,5 +110,15 @@ class WebAPI_FriendController extends CI_Controller
 			$info['error']['message'] = 'Please request with login.';
 		}
 		echo json_encode($info);
+	}
+	
+	public function follow()
+	{
+		_followUnfollow(true);
+	}
+	
+	public function unfollow()
+	{
+		_followUnfollow(false);
 	}
 }

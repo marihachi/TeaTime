@@ -65,3 +65,6 @@ $route['image/icon/(:any)'] = 'ImageController/icon/$1';
 $route['api/web/account/generate'] = 'api/WebAPI_AccountController/generate';
 $route['api/web/account/login'] = 'api/WebAPI_AccountController/login';
 $route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
+
+$route['api/web/user/follow'] = 'api/WebAPI_FriendController/follow';
+$route['api/web/user/unfollow'] = 'api/WebAPI_FriendController/unfollow';
