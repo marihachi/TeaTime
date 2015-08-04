@@ -23,6 +23,7 @@ class WebAPI_AccountController extends CI_Controller
 		$invalidSN = array();
 		$invalidSN[] = 'signup';
 		$invalidSN[] = 'home';
+		$invalidSN[] = 'tos';
 
 		header("Content-Type: application/json; charset=utf-8");
 
