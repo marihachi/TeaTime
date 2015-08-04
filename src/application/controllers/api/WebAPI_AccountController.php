@@ -166,8 +166,8 @@ class WebAPI_AccountController extends CI_Controller
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 105;
-			$info['error']['message'] = 'Failed to execute.';
+			$info['error']['code'] = 106;
+			$info['error']['message'] = 'Please request with login.';
 		}
 		echo json_encode($info);
 	}
