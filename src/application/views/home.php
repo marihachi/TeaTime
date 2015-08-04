@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<script>
 			$(function() {
+				// ログアウト
 				$('#logout-form').submit(function(event) {
 					event.preventDefault();
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
@@ -70,9 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</li>
 			</ul>
 		</nav>
-		<p>TeaTimeへようこそ</p>
-		<p>ユーザーリスト</p>
-		<p><a href=/tea-time/mrhc>まりはち</a></p>
+		<p>TeaTimeへようこそ <?= $name?>さん</p>
 		<form id=logout-form>
 			<input type=submit id=logout-button value="ログアウト">
 			<label id=logout-message></label>
