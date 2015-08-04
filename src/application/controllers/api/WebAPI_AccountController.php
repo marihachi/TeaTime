@@ -23,7 +23,7 @@ class WebAPI_AccountController extends CI_Controller
 				$isValidScreenName = false;
 				if (preg_match('/^[0-9]+$/i', $screenName) === 0)
 				{
-					if (count($screenName) >= 3 && count($screenName) <= 15)
+					if (strlen($screenName) >= 3 && strlen($screenName) <= 15)
 					{
 						if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
 						{
