@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_model extends CI_Model
+class Account_model extends CI_Model
 {
 	public function Create($screen_name, $password, $name, $bio)
 	{
@@ -11,12 +11,12 @@ class User_model extends CI_Model
 		$data["bio"] = $bio;
 		$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
 
-		if(!$this->db->insert('tea_time_users', $data))
+		if(!$this->db->insert('tea_time_accounts', $data))
 		{
 			//$error = $this->db->error();
 			return false;
 		}
-		$query = $this->db->get_where('tea_time_users', array('screen_name' => $screen_name), 1);
+		$query = $this->db->get_where('tea_time_accounts', array('screen_name' => $screen_name), 1);
 		return $query->result()[0];
 	}
 
@@ -32,7 +32,7 @@ class User_model extends CI_Model
 		if ($password !== null)
 			$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
 
-		$this->db->update('tea_time_users', $data);
+		$this->db->update('tea_time_accounts', $data);
 	}
 
 	public function FindByScreenName($screen_name)
@@ -40,7 +40,7 @@ class User_model extends CI_Model
 		$data = array();
 		$data["screen_name"] = $screen_name;
 		
-		$query = $this->db->get_where('tea_time_users', $data, 1);
+		$query = $this->db->get_where('tea_time_accounts', $data, 1);
 		if ($query->num_rows() > 0)
 		{
 			$user = $query->result()[0];
@@ -54,7 +54,7 @@ class User_model extends CI_Model
 
 	public function FindById($id)
 	{
-		$query = $this->db->get_where('tea_time_users', array('id' => $id), 1);
+		$query = $this->db->get_where('tea_time_accounts', array('id' => $id), 1);
 		if ($query->num_rows() > 0)
 		{
 			$user = $query->result()[0];

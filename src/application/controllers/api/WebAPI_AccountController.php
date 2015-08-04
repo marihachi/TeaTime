@@ -34,7 +34,7 @@ class WebAPI_AccountController extends CI_Controller
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post) && array_key_exists('name', $post) && array_key_exists('bio', $post))
 		{
-			$this->load->model('User_model', 'UserModel', TRUE);
+			$this->load->model('Account_model', 'AccountModel', TRUE);
 
 			$screenName = urldecode($post['screen_name']);
 			$password = urldecode($post['password']);
@@ -50,7 +50,7 @@ class WebAPI_AccountController extends CI_Controller
 					{
 						if (array_search($screenName, $invalidSN) === false)
 						{
-							if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
+							if ($resUser = $this->AccountModel->Create($screenName, $password, $name, $bio))
 							{
 								$isValidScreenName = true;
 
@@ -111,7 +111,7 @@ class WebAPI_AccountController extends CI_Controller
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post))
 		{
-			$this->load->model('User_model', 'UserModel', TRUE);
+			$this->load->model('Account_model', 'AccountModel', TRUE);
 
 			$screenName = urldecode($post['screen_name']);
 			$password = urldecode($post['password']);
@@ -119,7 +119,7 @@ class WebAPI_AccountController extends CI_Controller
 			$isSuccess = false;
 			if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 			{
-				if ($resUser = $this->UserModel->FindByScreenName($screenName))
+				if ($resUser = $this->AccountModel->FindByScreenName($screenName))
 				{
 					if (password_verify($password, $resUser->password_hash))
 					{

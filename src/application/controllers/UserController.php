@@ -5,16 +5,16 @@ class UserController extends CI_Controller
 {
 	public function index($screenName)
 	{
-		$this->load->model('User_model', 'UserModel', TRUE);
+		$this->load->model('Account_model', 'AccountModel', TRUE);
 
-		if ($resUser = $this->UserModel->FindByScreenName($screenName))
+		if ($account = $this->AccountModel->FindByScreenName($screenName))
 		{
 			$data = array();
-			$data['screenName'] = $resUser->screen_name;
-			$data['name'] = $resUser->name;
-			$data['bio'] = $resUser->bio;
-			$data['lv'] = $resUser->lv;
-			$data['exp'] = $resUser->exp;
+			$data['screenName'] = $account->screen_name;
+			$data['name'] = $account->name;
+			$data['bio'] = $account->bio;
+			$data['lv'] = $account->lv;
+			$data['exp'] = $account->exp;
 
 			$user = array();
 			$user['user'] = $data;
