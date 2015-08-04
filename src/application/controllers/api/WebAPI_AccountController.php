@@ -20,6 +20,10 @@ class WebAPI_AccountController extends CI_Controller
 	
 	public function generate()
 	{
+		$invalidSN = array();
+		$invalidSN[] = 'signup';
+		$invalidSN[] = 'home';
+
 		header("Content-Type: application/json; charset=utf-8");
 
 		if (!$this->_checkReferer())
@@ -43,26 +47,29 @@ class WebAPI_AccountController extends CI_Controller
 				{
 					if (strlen($screenName) >= 3 && strlen($screenName) <= 15)
 					{
-						if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
+						if (array_search($screenName, $invalidSN) === false)
 						{
-							$isValidScreenName = true;
+							if ($resUser = $this->UserModel->Create($screenName, $password, $name, $bio))
+							{
+								$isValidScreenName = true;
 
-							unset($resUser->password_hash);
-							$info['user'] = $resUser;
+								unset($resUser->password_hash);
+								$info['user'] = $resUser;
 
-							$data = array();
-							$data['is_login'] = true;
-							$data['screen_name'] = $screenName;
-							$data['name'] = $resUser->name;
-							$data['user_id'] = $resUser->id;
-							
-							$this->session->set_userdata($data);
-						}
-						else
-						{
-							http_response_code(500);
-							$info['error']['code'] = 200;
-							$info['error']['message'] = 'Failed to execute.';
+								$data = array();
+								$data['is_login'] = true;
+								$data['screen_name'] = $screenName;
+								$data['name'] = $resUser->name;
+								$data['user_id'] = $resUser->id;
+
+								$this->session->set_userdata($data);
+							}
+							else
+							{
+								http_response_code(500);
+								$info['error']['code'] = 200;
+								$info['error']['message'] = 'Failed to execute.';
+							}
 						}
 					}
 				}
