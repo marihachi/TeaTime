@@ -10,14 +10,14 @@ class WebAPI_AccountController extends CI_Controller
 		if ($this->agent->is_referral() || $this->agent->referrer() === "")
 		{
 			http_response_code(403);
-			$info['error']['code'] = 300;
+			$info['error']['code'] = 107;
 			$info['error']['message'] = "Invalid referer.";
 			echo json_encode($info);
 			return false;
 		}
 		return true;
 	}
-	
+
 	public function generate()
 	{
 		$invalidSN = array();
@@ -29,7 +29,7 @@ class WebAPI_AccountController extends CI_Controller
 
 		if (!$this->_checkReferer())
 			return;
-		
+
 		$info = array();
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post) && array_key_exists('name', $post) && array_key_exists('bio', $post))
@@ -54,32 +54,30 @@ class WebAPI_AccountController extends CI_Controller
 							{
 								$isValidScreenName = true;
 
-								unset($resUser->password_hash);
-								$info['user'] = $resUser;
+								unset($resUser['password_hash']);
 
 								$data = array();
 								$data['is_login'] = true;
-								$data['screen_name'] = $screenName;
-								$data['name'] = $resUser->name;
-								$data['user_id'] = $resUser->id;
-
+								$data['me'] = $resUser;
 								$this->session->set_userdata($data);
+
+								$info['user'] = $resUser;
 							}
 							else
 							{
 								http_response_code(500);
-								$info['error']['code'] = 200;
+								$info['error']['code'] = 105;
 								$info['error']['message'] = 'Failed to execute.';
 							}
 						}
 					}
 				}
-				
+
 				if (!$isValidScreenName)
 				{
 					// Invalid Screen Name
 					http_response_code(400);
-					$info['error']['code'] = 103;
+					$info['error']['code'] = 104;
 					$info['error']['message'] = "Invalid parameter.";
 					$info['error']['parameter'] = "screen_name";
 				}
@@ -87,26 +85,26 @@ class WebAPI_AccountController extends CI_Controller
 			else
 			{
 				http_response_code(400);
-				$info['error']['code'] = 101;
+				$info['error']['code'] = 102;
 				$info['error']['message'] = "Some invalid parameters.";
 			}
 		}
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 100;
+			$info['error']['code'] = 101;
 			$info['error']['message'] = 'Some required parameters.';
 		}
 		echo json_encode($info);
 	}
-	
+
 	public function login()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		
+
 		if (!$this->_checkReferer())
 			return;
-		
+
 		$info = array();
 		$post = $this->input->post();
 		if (array_key_exists('screen_name', $post) && array_key_exists('password', $post))
@@ -140,28 +138,28 @@ class WebAPI_AccountController extends CI_Controller
 			if (!$isSuccess)
 			{
 				http_response_code(400);
-				$info['error']['code'] = 101;
+				$info['error']['code'] = 102;
 				$info['error']['message'] = "Some invalid parameters.";
 			}
 		}
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 100;
+			$info['error']['code'] = 101;
 			$info['error']['message'] = 'Some required parameters.';
 		}
 		echo json_encode($info);
 	}
-	
+
 	public function logout()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		
+
 		if (!$this->_checkReferer())
 			return;
-		
+
 		$info = array();
-		
+
 		if ($this->session->userdata('is_login'))
 		{
 			$this->session->sess_destroy();
@@ -170,7 +168,7 @@ class WebAPI_AccountController extends CI_Controller
 		else
 		{
 			http_response_code(400);
-			$info['error']['code'] = 200;
+			$info['error']['code'] = 105;
 			$info['error']['message'] = 'Failed to execute.';
 		}
 		echo json_encode($info);

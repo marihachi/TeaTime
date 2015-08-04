@@ -9,20 +9,13 @@ class UserController extends CI_Controller
 
 		if ($account = $this->AccountModel->FindByScreenName($screenName))
 		{
-			$data = array();
-			$data['screenName'] = $account->screen_name;
-			$data['name'] = $account->name;
-			$data['bio'] = $account->bio;
-			$data['lv'] = $account->lv;
-			$data['exp'] = $account->exp;
-
 			$user = array();
-			$user['user'] = $data;
+			$user['user'] = $account;
 			$this->load->view('user', $user);
 		}
 		else
 		{
-			$this->load->view('errors/html/error_404', array("heading" => "404 User Not Found", "message" => "Does not exist is ScreenName"));
+			show_error("User Not Found", 404);
 		}
 	}
 }

@@ -3,11 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Status_model extends CI_Model
 {
-	public function Create($userId, $text, $replyToId, $imageCount)
+	public function Create($accountId, $text, $replyToId, $imageCount)
 	{
 		$data = array();
 		$data["id"] = uniqid(rand(10000, 19999));
-		$data["userId"] = $userId;
+		$data["accountId"] = $accountId;
 		$data["text"] = $text;
 		$data["replyToId"] = $replyToId;
 		$data["imageCount"] = $imageCount;
@@ -17,12 +17,15 @@ class Status_model extends CI_Model
 		return $data["id"];
 	}
 
-	public function Remove($id)
+	public function Destroy($id)
 	{
 		$data = array();
 		$data["id"] = $id;
 		
-		$this->db->delete('tea_time_statuses', $data);
+		if (!$this->db->delete('tea_time_statuses', $data)
+			return false;
+			
+		return true;
 	}
 
 	public function FindById($id)
@@ -33,11 +36,12 @@ class Status_model extends CI_Model
 		$query = $this->db->get_where('tea_time_statuses', $data, 1);
 		if ($query->num_rows() > 0)
 		{
-			return $query->result()[0];
+			$status = (array)$query->result()[0];
+			return $status;
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 	}
 }
