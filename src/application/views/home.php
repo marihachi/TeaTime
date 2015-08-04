@@ -15,66 +15,93 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
 		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<script>
+			// ログアウト
 			$(function() {
-				// ログアウト
-				$('#logout-form').submit(function(event) {
-					event.preventDefault();
+				$('#logout-button').click(function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
-						type: 'get',
+						type: 'post',
 						dataType: 'json',
-						xhrFields: {
-							withCredentials: true
-						}
-					}).done(function(){
+					}).done(function() {
 						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
-					}).fail(function(){
-						$('#logout-message').text("ログアウトに失敗しました。");
+					}).fail(function() {
+						$('#logout-message').text('ログアウトに失敗しました');
 					});
 				});
 			});
 		</script>
 		<style>
-			* {
-				margin: 0;
-				padding: 0;
+			a {
+				color: #fff;
+			}
+			a:active, a:hover, a:focus {
+				color: #ddd;
 			}
 			body {
 				background: #eee;
 				color: #333;
+				padding-top: 94px;
 			}
-			nav#ToolBar {
-				font-size: 20px;
+			.btn-teatime-1 {
+				background: transparent;
+				border: 1px solid #fff;
+				color: #fff;
+			}
+			.btn-teatime-1:hover,
+			.btn-teatime-1:active,
+			.btn-teatime-1:focus{
+				color: #eee;
+			}
+			
+			.home-nav {
 				position: fixed;
-				bottom: 0;
-				height: 50px;
-				width: 100%;
+				top: 0px;
+				right: 0px;
+				left: 0px;
+				z-index: 1030;
+				padding: 6px;
+				
 				color: #fff;
 				background: #D59B6D;
 				opacity: 0.92;
 			}
-			#ToolBar ul li {
-				display: inline-block;
+			.home-nav a {
+				font-size: 16px;
+			}
+			.form-control {
+				color: #555;
+				background-color: rgba(255, 255, 255, 0.6);
+				box-shadow: none;
+			}
+			.form-control:focus {
+				border-color: #FF9A00;
+				box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 4px rgba(251, 152, 0, 0.6);
 			}
 		</style>
 	</head>
 	<body>
-		<nav id=ToolBar>
-			<ul>
-				<li>TeaTime</li>
-				<li>Home</li>
-				<li>Mention</li>
-				<li>
-					<form>
-						<input type=text id=TextLineBox>
-						<input type=submit value=Post>
-					</form>
-				</li>
-			</ul>
+		<nav class="home-nav">
+			<div class=container>
+				<div class=row>
+					<div class="col-xs-4 row">
+						<div class="col-xs-6"><a href="#">Home</a></div>
+						<div class="col-xs-6"><a href="#">Mention</a></div>
+					</div>
+					<div class="col-xs-6">
+						<div class=input-group>
+							<input type=text class="form-control" id=post-text-box>
+							<span class="input-group-btn">
+								<button class="btn btn-teatime-1" id=post-button>Post</button>
+							</span>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<button id=logout-button class="btn btn-default">ログアウト</button>
+					</div>
+				</div>
+			</div>
 		</nav>
-		<p>TeaTimeへようこそ <?= $me['name'];?>さん</p>
-		<form id=logout-form>
-			<input type=submit id=logout-button value="ログアウト">
-			<label id=logout-message></label>
-		</form>
+		<main>
+			
+		</main>
 	</body>
 </html>
