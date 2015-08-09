@@ -32,10 +32,7 @@ class Account_model extends CI_Model
 		if ($password !== null)
 			$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
 
-		if (!$this->db->update('tea_time_accounts', $data))
-			return false;
-		
-		return true;
+		return !!$this->db->update('tea_time_accounts', $data);
 	}
 
 	public function FindByScreenName($screen_name)

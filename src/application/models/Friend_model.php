@@ -9,10 +9,10 @@ class Friend_model extends CI_Model
 		$data["src_account_id"] = $src_account_id;
 		$data["dest_account_id"] = $dest_account_id;
 
-		if(!$this->db->insert('tea_time_friends', $data))
+		if($this->db->insert('tea_time_friends', $data))
+			return $data;
+		else
 			return false;
-
-		return $data;
 	}
 
 	public function Destroy($src_account_id, $dest_account_id)
@@ -21,10 +21,7 @@ class Friend_model extends CI_Model
 		$data["src_account_id"] = $src_account_id;
 		$data["dest_account_id"] = $dest_account_id;
 
-		if(!$this->db->delete('tea_time_friends', $data))
-			return false;
-
-		return true;
+		return !!$this->db->delete('tea_time_friends', $data);
 	}
 
 	public function GetFollowee($target_account_id)
@@ -34,14 +31,9 @@ class Friend_model extends CI_Model
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
-		{
-			$ids = (array)$query->result();
-			return $ids;
-		}
+			return (array)$query->result();
 		else
-		{
 			return false;
-		}
 	}
 
 	public function GetFollower($target_account_id)
@@ -51,13 +43,8 @@ class Friend_model extends CI_Model
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
-		{
-			$ids = (array)$query->result();
-			return $ids;
-		}
+			return (array)$query->result();
 		else
-		{
 			return false;
-		}
 	}
 }

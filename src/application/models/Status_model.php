@@ -12,38 +12,30 @@ class Status_model extends CI_Model
 		$data["imageCount"] = $imageCount;
 		if ($replyToId !== null)
 			$data["replyToId"] = $replyToId;
-		
-		if (!$this->db->insert('tea_time_statuses', $data))
+
+		if ($this->db->insert('tea_time_statuses', $data))
+			return $this->FindById($id);
+		else
 			return false;
-		
-		return $this->FindById($id);
 	}
 
 	public function Destroy($id)
 	{
 		$data = array();
 		$data["id"] = $id;
-		
-		if (!$this->db->delete('tea_time_statuses', $data)
-			return false;
-			
-		return true;
+
+		return !!$this->db->delete('tea_time_statuses', $data);
 	}
 
 	public function FindById($id)
 	{
 		$data = array();
 		$data["id"] = $id;
-		
+
 		$query = $this->db->get_where('tea_time_statuses', $data, 1);
 		if ($query->num_rows() > 0)
-		{
-			$status = (array)$query->result()[0];
-			return $status;
-		}
+			return (array)$query->result()[0];
 		else
-		{
 			return false;
-		}
 	}
 }
