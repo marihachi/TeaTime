@@ -192,13 +192,13 @@ class WebAPI_FriendController extends CI_Controller
 		$info = array();
 		if ($isLogin)
 		{
-			$post = $this->input->post();
-			if (array_key_exists('screen_name', $post))
+			$get = $this->input->get();
+			if (array_key_exists('screen_name', $get))
 			{
 				$this->load->model('Account_model', 'AccountModel', TRUE);
 				$this->load->model('Friend_model', 'FriendModel', TRUE);
 
-				$screenName = urldecode($post['screen_name']);
+				$screenName = urldecode($get['screen_name']);
 				if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 				{
 					if ($screenName !== $meScreenName)

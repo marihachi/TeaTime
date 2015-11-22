@@ -66,6 +66,8 @@ $route['api/web/account/create'] = 'api/WebAPI_AccountController/create';
 $route['api/web/account/login'] = 'api/WebAPI_AccountController/login';
 $route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
 
+$route['api/web/friend/show'] = 'api/WebAPI_FriendController/show';
+
 $route['api/web/user/follow'] = 'api/WebAPI_FriendController/follow';
 $route['api/web/user/unfollow'] = 'api/WebAPI_FriendController/unfollow';
 
