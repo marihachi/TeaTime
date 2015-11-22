@@ -68,3 +68,7 @@ $route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
 
 $route['api/web/user/follow'] = 'api/WebAPI_FriendController/follow';
 $route['api/web/user/unfollow'] = 'api/WebAPI_FriendController/unfollow';
+
+$route['api/web/status/show'] = 'api/WebAPI_StatusController/show';
+$route['api/web/status/update'] = 'api/WebAPI_StatusController/update';
+$route['api/web/status/timeline'] = 'api/WebAPI_StatusController/timeline';

@@ -15,8 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
 		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<script>
-			// ログアウト
 			$(function() {
+				// logout
 				$('#logout-button').click(function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
 						type: 'get',
@@ -27,6 +27,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$('#logout-message').text('ログアウトに失敗しました');
 					});
 				});
+				
+				// status-update
 				$('#post-button').click(function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/update", {
 						type: 'post',
@@ -36,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}).fail(function() {
 						alert('投稿に失敗しました');
 					});
-				})
+				});
 			});
 		</script>
 		<style>

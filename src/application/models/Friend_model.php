@@ -26,6 +26,19 @@ class Friend_model extends CI_Model
 		return !!$this->db->delete('tea_time_friends', $data);
 	}
 
+	public function Find($srcAccountId, $destAccountId)
+	{
+		$data = array();
+		$data["src_account_id"] = $srcAccountId;
+		$data["dest_account_id"] = $destAccountId;
+
+		$query = $this->db->get_where('tea_time_friends', $data);
+		if ($query->num_rows() > 0)
+			return $query->result()[0];
+		else
+			return false;
+	}
+
 	// 対象をフォローしているユーザーの一覧を取得
 	public function GetFollowers($targetAccountId)
 	{
