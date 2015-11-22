@@ -3,11 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Friend_model extends CI_Model
 {
-	public function Create($src_account_id, $dest_account_id)
+	// フォロー関係を作成
+	public function Create($srcAccountId, $destAccountId)
 	{
 		$data = array();
-		$data["src_account_id"] = $src_account_id;
-		$data["dest_account_id"] = $dest_account_id;
+		$data["src_account_id"] = $srcAccountId;
+		$data["dest_account_id"] = $destAccountId;
 
 		if($this->db->insert('tea_time_friends', $data))
 			return $data;
@@ -15,19 +16,21 @@ class Friend_model extends CI_Model
 			return false;
 	}
 
-	public function Destroy($src_account_id, $dest_account_id)
+	// フォロー関係を破棄
+	public function Destroy($srcAccountId, $destAccountId)
 	{
 		$data = array();
-		$data["src_account_id"] = $src_account_id;
-		$data["dest_account_id"] = $dest_account_id;
+		$data["src_account_id"] = $srcAccountId;
+		$data["dest_account_id"] = $destAccountId;
 
 		return !!$this->db->delete('tea_time_friends', $data);
 	}
 
-	public function GetFollowee($target_account_id)
+	// 対象をフォローしているユーザーの一覧を取得
+	public function GetFollowers($targetAccountId)
 	{
 		$data = array();
-		$data["src_account_id"] = $target_account_id;
+		$data["dest_account_id"] = $targetAccountId;
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
@@ -36,10 +39,11 @@ class Friend_model extends CI_Model
 			return false;
 	}
 
-	public function GetFollower($target_account_id)
+	// 対象がフォローしているユーザーの一覧を取得
+	public function GetFollowings($targetAccountId)
 	{
 		$data = array();
-		$data["dest_account_id"] = $target_account_id;
+		$data["src_account_id"] = $targetAccountId;
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
