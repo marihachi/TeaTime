@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Account_model extends CI_Model
 {
-	public function Create($screen_name, $password, $name, $bio)
+	public function Create($screenName, $password, $name, $bio)
 	{
 		$data = array();
-		$data["screen_name"] = $screen_name;
+		$data["screen_name"] = $screenName;
 		$data["name"] = $name;
 		$data["bio"] = $bio;
 		$data["password_hash"] = password_hash($password, PASSWORD_BCRYPT);
@@ -16,15 +16,15 @@ class Account_model extends CI_Model
 			//$error = $this->db->error();
 			return false;
 		}
-		$query = $this->db->get_where('tea_time_accounts', array('screen_name' => $screen_name), 1);
+		$query = $this->db->get_where('tea_time_accounts', array('screen_name' => $screenName), 1);
 		return (array)$query->result()[0];
 	}
 
-	public function Update($screen_name = null, $name = null, $bio = null, $password = null)
+	public function Update($screenName = null, $name = null, $bio = null, $password = null)
 	{
 		$data = array();
-		if ($screen_name !== null)
-			$data["screen_Name"] = $screen_name;
+		if ($screenName !== null)
+			$data["screen_Name"] = $screenName;
 		if ($name !== null)
 			$data["name"] = $name;
 		if ($bio !== null)
@@ -35,10 +35,10 @@ class Account_model extends CI_Model
 		return !!$this->db->update('tea_time_accounts', $data);
 	}
 
-	public function FindByScreenName($screen_name)
+	public function FindByScreenName($screenName)
 	{
 		$data = array();
-		$data["screen_name"] = $screen_name;
+		$data["screen_name"] = $screenName;
 		
 		$query = $this->db->get_where('tea_time_accounts', $data, 1);
 		if ($query->num_rows() > 0)

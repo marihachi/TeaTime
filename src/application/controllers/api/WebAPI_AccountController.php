@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class WebAPI_AccountController extends CI_Controller
 {
-	public function generate()
+	public function create()
 	{
 		$invalidSN = array();
 		$invalidSN[] = 'signup';

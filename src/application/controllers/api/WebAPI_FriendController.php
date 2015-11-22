@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class WebAPI_FriendController extends CI_Controller
 {
-
 	private function _followUnfollow($isFollow, $screenName)
 	{
 		header("Content-Type: application/json; charset=utf-8");
@@ -14,12 +13,12 @@ class WebAPI_FriendController extends CI_Controller
 		if (!CheckReferer($this->agent))
 			return;
 
-		$s_isLogin = $this->session->userdata('is_login');
-		$s_screenName = $this->session->userdata('me')['screen_name'];
-		$s_userId = $this->session->userdata('me')['id'];
+		$isLogin = $this->session->userdata('is_login');
+		$meScreenName = $this->session->userdata('me')['screen_name'];
+		$meUserId = $this->session->userdata('me')['id'];
 
 		$info = array();
-		if ($s_isLogin)
+		if ($isLogin)
 		{
 			$post = $this->input->post();
 			if (array_key_exists('screen_name', $post))
@@ -30,12 +29,12 @@ class WebAPI_FriendController extends CI_Controller
 				$screenName = urldecode($post['screen_name']);
 				if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
 				{
-					if ($screenName !== $s_screenName)
+					if ($screenName !== $meScreenName)
 					{
-						if ($resUser = $this->AccountModel->FindByScreenName($screenName))
+						if ($destUser = $this->AccountModel->FindByScreenName($screenName))
 						{
-							$srcId = $s_userId;
-							$destId = $resUser['id'];
+							$srcId = $meUserId;
+							$destId = $destUser['id'];
 
 							if ($isFollow)
 							{

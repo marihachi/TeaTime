@@ -62,7 +62,7 @@ $route['image/status/(:any)'] = 'ImageController/status/$1';
 $route['image/header/(:any)'] = 'ImageController/header/$1';
 $route['image/icon/(:any)'] = 'ImageController/icon/$1';
 
-$route['api/web/account/generate'] = 'api/WebAPI_AccountController/generate';
+$route['api/web/account/create'] = 'api/WebAPI_AccountController/create';
 $route['api/web/account/login'] = 'api/WebAPI_AccountController/login';
 $route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
 
