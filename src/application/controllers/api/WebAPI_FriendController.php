@@ -3,26 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class WebAPI_FriendController extends CI_Controller
 {
-	private function _checkReferer()
-	{
-		$this->load->library('user_agent');
-
-		if ($this->agent->is_referral() || $this->agent->referrer() === "")
-		{
-			http_response_code(403);
-			$info['error']['code'] = 107;
-			$info['error']['message'] = "Invalid referer.";
-			echo json_encode($info);
-			return false;
-		}
-		return true;
-	}
 
 	private function _followUnfollow($isFollow, $screenName)
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
-		if (!$this->_checkReferer())
+		$this->load->library('user_agent');
+		$this->load->helper("MY_CheckReferer");
+
+		if (!CheckReferer($this->agent))
 			return;
 
 		$s_isLogin = $this->session->userdata('is_login');
