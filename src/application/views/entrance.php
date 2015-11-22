@@ -123,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</main>
 		<footer>
-			<small>(c)2015 TeaTime.</small>
+			<small>(c)TeaTime.</small>
 		</footer>
 	</body>
 </html>
