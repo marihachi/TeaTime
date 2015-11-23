@@ -54,36 +54,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							.text('フォロー')
 							.click(follow);
 					}
+					if (data.is_follower) {
+						$('#friend-status').text('フォローされています。');
+					} else {
+						$('#friend-status').text('フォローされていません。');
+					}
 				}).fail(function(data) {
+					switch(data.responseJSON.error.code) {
+						case 106:
+							$('#friend-status').text('あなたです。');
+							$('#follow-button').css({display: "none"});
+							break;
+						case 201:
+							$('#follow-button').css({display: "none"});
+							break;
+						default:
+							alert('ページの読み込みに失敗しました。再読み込みしてください。');
+							break;
+					}
 				});
 			});
 		</script>
 		<style>
 			body {
-				background: #D59B6D;
-				color: #fff;
+				background-color: rgba(213, 155, 109, .8);
 			}
-			main {
-				margin: auto;
-				position: absolute;
-				top: 0px;
-				right: 0px;
-				bottom: 0px;
-				left: 0px;
-				height: 14em;
+			#profile-area {
+				display: flex;
+				justify-content: center;
+				padding: 10px;
+				margin: 0 auto;
+				width: 300px;
+				box-sizing: border-box;
+				background-color: rgba(255, 255, 255, .62);
+			}
+			#profile-area-inner {
+				color: rgba(0, 0, 0, .7);
+			}
+			#profile-icon {
+				height: 150px;
+				width: 150px;
+				border: 1px solid rgba(255, 255, 255, .5);
+				border-radius: 75px;
+				box-sizing: border-box;
+			}
+			footer {
 				text-align: center;
 			}
 		</style>
 	</head>
 	<body>
 		<main>
-			<img src="/teatime/image/icon/<?php echo $user["screen_name"];?>">
-			<p><?php echo $user["name"]."(@".$user["screen_name"].")";?></p>
-			<button class="btn btn-defalut" id="follow-button">フォロー</button>
-			<p>bio: <?php echo $user["bio"];?></p>
-			<p>Lv: <?php echo $user["lv"];?></p>
-			<p>Exp: <?php echo $user["exp"];?></p>
-			<p><a href=/tea-time>ホームへ</a></p>
+			<div id="profile-area">
+				<div id="profile-area-inner">
+					<img id="profile-icon" src="//marihachi.php.xdomain.jp/tea-time/icon_test.jpg"><!-- "//marihachi.php.xdomain.jp/tea-time/image/icon/<?php echo $user["screen_name"];?>" -->
+					<h1><?php echo $user["name"]."(@".$user["screen_name"].")";?></h1>
+					<button class="btn btn-defalut" id="follow-button">フォロー</button>
+					<div>
+						<p id="friend-status"></p>
+					</div>
+					<div>
+						<p>bio: <?php echo $user["bio"];?></p>
+					</div>
+					<div>
+						<p>Lv: <?php echo $user["lv"];?></p>
+					</div>
+					<div>
+						<p>Exp: <?php echo $user["exp"];?></p>
+					</div>
+				</div>
+			</div>
 		</main>
+		<footer>
+			<p><a href=/tea-time>ホームへ</a></p>
+		</footer>
 	</body>
 </html>
