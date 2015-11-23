@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						dataType: 'json',
 						data: {"screen_name": '<?php echo $user["screen_name"];?>'}
 					}).done(function() {
-						$('#follow-button > button')
+						$('#follow-button')
 							.text('フォロー中')
 							.click(unfollow);
 					}).fail(function(data) {
@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						dataType: 'json',
 						data: {"screen_name": '<?php echo $user["screen_name"];?>'}
 					}).done(function() {
-						$('#follow-button > button')
+						$('#follow-button')
 							.text('フォロー')
 							.click(follow);
 					}).fail(function() {
@@ -42,11 +42,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					data: {"screen_name": '<?php echo $user["screen_name"];?>'}
 				}).done(function(data) {
 					if (data.is_following) {
-						$('#follow-button > button')
+						$('#follow-button')
 							.text('フォロー中')
 							.click(unfollow);
 					} else {
-						$('#follow-button > button')
+						$('#follow-button')
 							.text('フォロー')
 							.click(follow);
 					}
@@ -75,9 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<main>
 			<img src="/teatime/image/icon/<?php echo $user["screen_name"];?>">
 			<p><?php echo $user["name"]."(@".$user["screen_name"].")";?></p>
-			<div id="follow-button">
-				<button class="btn btn-defalut" id="follow-button-off">フォロー</button>
-			</div>
+			<button class="btn btn-defalut" id="follow-button">フォロー</button>
 			<p>bio: <?php echo $user["bio"];?></p>
 			<p>Lv: <?php echo $user["lv"];?></p>
 			<p>Exp: <?php echo $user["exp"];?></p>
