@@ -7,53 +7,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<meta http-equiv=X-UA-Compatible content="IE=edge" />
 		<meta name=viewport content="width=device-width, initial-scale=1" />
 		<title><?php echo $user["name"];?>さんのページ - TeaTime | ティータイムにピッタリなSNS</title>
-		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
+		<script src=//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script>
 		<script>
 			$(function() {
-				$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/friend/show", {
-						type: 'get',
-						dataType: 'json',
-						data: {"screen_name": '<?php echo $user["screen_name"];?>'}
-					}).done(function(data) {
-						if (data.is_following) {
-							$('#follow-button > button')
-								.attr('id','follow-button-on')
-								.text('フォロー中');
-						} else {
-							$('#follow-button > button')
-								.attr('id','follow-button-off')
-								.text('フォロー');
-						}
-					}).fail(function(data) {
-						alert('フォローに失敗しました (' + data.responseJSON.error.message + ')');
-					});
-				// follow
-				$('#follow-button-off').click(function() {
+				var follow = function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/follow", {
 						type: 'post',
 						dataType: 'json',
 						data: {"screen_name": '<?php echo $user["screen_name"];?>'}
 					}).done(function() {
-						$('#follow-button > div')
-							.attr('id','follow-button-on')
-							.text('フォロー中');
+						$('#follow-button > button')
+							.text('フォロー中')
+							.click(unfollow);
 					}).fail(function(data) {
 						alert('フォローに失敗しました (' + data.responseJSON.error.message + ')');
 					});
-				});
-				// unfollow
-				$('#follow-button-on').click(function() {
+				};
+				var unfollow = function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/unfollow", {
 						type: 'post',
 						dataType: 'json',
 						data: {"screen_name": '<?php echo $user["screen_name"];?>'}
 					}).done(function() {
-						$('#follow-button > div')
-							.attr('id','follow-button-off')
-							.text('フォロー');
+						$('#follow-button > button')
+							.text('フォロー')
+							.click(follow);
 					}).fail(function() {
 						alert('アンフォローに失敗しました');
 					});
+				}
+				$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/friend/show", {
+					type: 'get',
+					dataType: 'json',
+					data: {"screen_name": '<?php echo $user["screen_name"];?>'}
+				}).done(function(data) {
+					if (data.is_following) {
+						$('#follow-button > button')
+							.text('フォロー中')
+							.click(unfollow);
+					} else {
+						$('#follow-button > button')
+							.text('フォロー')
+							.click(follow);
+					}
+				}).fail(function(data) {
 				});
 			});
 		</script>
