@@ -18,6 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}).done(function() {
 						$('#follow-button')
 							.text('フォロー中')
+							.unbind('click', follow)
 							.click(unfollow);
 					}).fail(function(data) {
 						alert('フォローに失敗しました (' + data.responseJSON.error.message + ')');
@@ -31,6 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}).done(function() {
 						$('#follow-button')
 							.text('フォロー')
+							.unbind('click', unfollow)
 							.click(follow);
 					}).fail(function() {
 						alert('アンフォローに失敗しました');
