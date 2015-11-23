@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script>
 			$(function() {
 				var follow = function() {
+					$('#follow-button').unbind('click', follow);
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/follow", {
 						type: 'post',
 						dataType: 'json',
@@ -18,13 +19,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}).done(function() {
 						$('#follow-button')
 							.text('フォロー中')
-							.unbind('click', follow)
-							.click(unfollow);
+							.bind('click', unfollow);
 					}).fail(function(data) {
+						$('#follow-button').bind('click', follow)
 						alert('フォローに失敗しました (' + data.responseJSON.error.message + ')');
 					});
 				};
 				var unfollow = function() {
+					$('#follow-button').unbind('click', unfollow);
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/unfollow", {
 						type: 'post',
 						dataType: 'json',
@@ -32,9 +34,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}).done(function() {
 						$('#follow-button')
 							.text('フォロー')
-							.unbind('click', unfollow)
-							.click(follow);
+							.bind('click', follow);
 					}).fail(function() {
+						$('#follow-button').bind('click', unfollow)
 						alert('アンフォローに失敗しました');
 					});
 				}
