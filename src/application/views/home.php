@@ -7,20 +7,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<meta http-equiv=X-UA-Compatible content="IE=edge" />
 		<meta name=viewport content="width=device-width, initial-scale=1" />
 		<title>ホーム - TeaTime | ティータイムにピッタリなSNS</title>
-		<link href=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css rel=stylesheet />
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
-		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
 		<script>
 			$(function() {
 				// logout
 				$('#logout-button').click(function() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
 						type: 'get',
-						dataType: 'json',
+						dataType: 'json'
 					}).done(function() {
 						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
 					}).fail(function() {
@@ -33,6 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/update", {
 						type: 'post',
 						dataType: 'json',
+						data: {"text": $('#post-text-box').val()}
 					}).done(function() {
 						alert('投稿成功');
 					}).fail(function() {
@@ -130,9 +125,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="col-xs-6">
 						<div class=input-group>
-							<input type=text class="form-control" id=post-text-box>
+							<input type=text class="form-control" id="post-text-box">
 							<span class="input-group-btn">
-								<button class="btn btn-teatime-white" id=post-button>Post</button>
+								<button class="btn btn-teatime-white" id="post-button">Post</button>
 							</span>
 						</div>
 					</div>

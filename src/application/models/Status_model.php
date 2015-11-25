@@ -3,18 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Status_model extends CI_Model
 {
-	public function Create($accountId, $text, $imageCount, $replyToId = null)
+	public function Create($userId, $text, $imageCount, $replyToId = null)
 	{
 		$data = array();
 		$data["id"] = uniqid(rand(10000, 19999));
-		$data["accountId"] = $accountId;
+		$data["userId"] = $userId;
 		$data["text"] = $text;
 		$data["imageCount"] = $imageCount;
 		if ($replyToId !== null)
 			$data["replyToId"] = $replyToId;
 
 		if ($this->db->insert('tea_time_statuses', $data))
-			return $this->FindById($id);
+			return $this->FindById($data["id"]);
 		else
 			return false;
 	}
