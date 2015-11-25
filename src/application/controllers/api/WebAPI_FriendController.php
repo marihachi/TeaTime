@@ -7,9 +7,6 @@ class WebAPI_FriendController extends CI_Controller
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
-		$this->load->library('user_agent');
-		$this->load->helper("MY_CheckReferer");
-
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -97,9 +94,6 @@ class WebAPI_FriendController extends CI_Controller
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
-		$this->load->library('user_agent');
-		$this->load->helper("MY_CheckReferer");
-
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -178,9 +172,6 @@ class WebAPI_FriendController extends CI_Controller
 	public function show()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-
-		$this->load->library('user_agent');
-		$this->load->helper("MY_CheckReferer");
 
 		if (!CheckReferer($this->agent))
 			return;

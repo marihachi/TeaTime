@@ -3,12 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class WebAPI_StatusController extends CI_Controller
 {
-	public function update()
+	public function show()
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
-		$this->load->library('user_agent');
-		$this->load->helper("MY_CheckReferer");
+		if (!CheckReferer($this->agent))
+			return;
+
+		$info = array();
+		$get = $this->input->get();
+		
+		if (array_key_exists('status_id', $get))
+		{
+			
+		}
+		else
+		{
+			http_response_code(400);
+			$info['error']['code'] = 101;
+			$info['error']['message'] = 'Some required parameters.';
+		}
+		echo json_encode($info);
+	}
+	
+	public function update()
+	{
+		header("Content-Type: application/json; charset=utf-8");
 
 		if (!CheckReferer($this->agent))
 			return;
