@@ -15,7 +15,31 @@ class WebAPI_StatusController extends CI_Controller
 		
 		if (array_key_exists('status_id', $get))
 		{
-			
+			$this->load->model('Status_model', 'StatusModel', TRUE);
+
+			if ($this->session->userdata('is_login'))
+			{
+				$me = $this->session->userdata('me');
+
+				$text = urldecode($post['text']);
+
+				if ($status = $this->StatusModel->FindById($get['status_id']))
+				{
+					$info['status'] = $status;
+				}
+				else
+				{
+					http_response_code(500);
+					$info['error']['code'] = 105;
+					$info['error']['message'] = 'Failed to execute.';
+				}
+			}
+			else
+			{
+				http_response_code(400);
+				$info['error']['code'] = 106;
+				$info['error']['message'] = 'Please request with login.';
+			}
 		}
 		else
 		{
