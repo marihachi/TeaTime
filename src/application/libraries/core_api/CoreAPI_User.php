@@ -7,7 +7,6 @@ class CoreAPI_User
 	{
 		header("Content-Type: application/json; charset=utf-8");
 		$res = "";
-		$this->load->helper("Helper_ApiResponseBuilder");
 
 		if (array_key_exists('screen_name', $post))
 		{
@@ -27,7 +26,7 @@ class CoreAPI_User
 						if ($this->FriendModel->Find($srcId, $destId) === false)
 						{
 							if ($this->FriendModel->Create($srcId, $destId))
-								$res = BuildSuccessResponse('Follow was successful.');
+								$res = BuildSuccessResponse("successful.");
 							else
 								$res = BuildErrorResponse(500, 105, 'Failed to execute.');
 						}
@@ -71,7 +70,7 @@ class CoreAPI_User
 						if ($this->FriendModel->Find($srcId, $destId) === false)
 						{
 							if ($this->FriendModel->Destroy($srcId, $destId))
-								$res = BuildSuccessResponse('Unfollow was successful.');
+								$res = BuildSuccessResponse('successful.');
 							else
 								$res = BuildErrorResponse(500, 105, 'Failed to execute.');
 						}
@@ -96,7 +95,7 @@ class CoreAPI_User
 	public function friendstatus($meScreenName, $meUserId, $get)
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		
+
 		if (array_key_exists('screen_name', $get))
 		{
 			$this->load->model('Account_model', 'AccountModel', TRUE);
@@ -112,8 +111,12 @@ class CoreAPI_User
 					{
 						$isFollower = !!$this->FriendModel->Find($user['id'], $meUserId);
 						$isFollowing = !!$this->FriendModel->Find($meUserId, $user['id']);
-						$info['is_follower'] = $isFollower;
-						$info['is_following'] = $isFollowing;
+						
+						$res = BuildErrorResponse([
+							"message" => "successful.",
+							"is_follower" => $isFollower, 
+							"is_following" => $isFollowing
+						]);
 					}
 					else
 						$res = BuildErrorResponse(400, 200, 'User not found.');
