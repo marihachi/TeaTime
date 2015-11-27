@@ -5,7 +5,6 @@ class WebAPI_StatusController extends CI_Controller
 {
 	public function show()
 	{
-		$res = "";
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -23,8 +22,6 @@ class WebAPI_StatusController extends CI_Controller
 
 	public function update()
 	{
-		header("Content-Type: application/json; charset=utf-8");
-
 		if (!CheckReferer($this->agent))
 			return;
 

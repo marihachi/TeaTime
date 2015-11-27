@@ -8,7 +8,6 @@ class CoreAPI_User
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Account_model', 'AccountModel', TRUE);
 		$this->load->model('Friend_model', 'FriendModel', TRUE);
-		$res = "";
 
 		if (!ApiParamValidate($post, ['screen_name']))
 			return;
@@ -50,7 +49,6 @@ class CoreAPI_User
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Account_model', 'AccountModel', TRUE);
 		$this->load->model('Friend_model', 'FriendModel', TRUE);
-		$res = "";
 
 		if (!ApiParamValidate($post, ['screen_name']))
 			return;

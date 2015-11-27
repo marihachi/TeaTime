@@ -7,7 +7,6 @@ class WebAPI_AccountController extends CI_Controller
 	{
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model("Account_model", "AccountModel", TRUE);
-		$res = "";
 		
 		if (!CheckReferer($this->agent))
 			return;
@@ -77,7 +76,6 @@ class WebAPI_AccountController extends CI_Controller
 	{
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model("Account_model", "AccountModel", TRUE);
-		$res = "";
 		
 		if (!CheckReferer($this->agent))
 			return;
@@ -119,7 +117,6 @@ class WebAPI_AccountController extends CI_Controller
 	{
 		header("Content-Type: application/json; charset=utf-8");
 
-		$res = "";
 		if (!CheckReferer($this->agent))
 			return;
 

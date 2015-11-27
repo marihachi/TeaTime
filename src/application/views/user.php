@@ -2,18 +2,26 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $followState = "不明";
+$isFollowing = false;
+$isFollower = false;
 $isVisibleFollowButton = true;
 $this->load->library("CoreAPI_User");
 $res = $this->CoreAPI_User->friendstatus($meScreenName, $meUserId, $get);
+$resArray = json_decode($res, true);
 if (IsSuccessResponse($res))
 {
-	
+	$isFollowing = $resArray['is_following'];
+	$isFollower = $resArray['is_follower'];
+
+	if ($isFollower)
+		$followState = "フォローされています。";
+	else
+		$followState = "フォローされていません。";	
 }
 else
 {
-	$resArray = json_decode($res, true);
-	
-	switch($resArray['error']['code']) {
+	switch($resArray['error']['code'])
+	{
 		case 106:
 			$followState = "あなたです。";
 			$isVisibleFollowButton = false;
@@ -38,6 +46,10 @@ else
 			$(function() {
 				<?php
 				if (!$isVisibleFollowButton) echo '$("#follow-button").css({display: "none"});';
+				if ($isFollowing)
+					echo '$("#follow-button").text("フォロー中").click(unfollow);';
+				else
+					echo '$("#follow-button").text("フォロー").click(follow);';
 				?>
 				var follow = function() {
 					$("#follow-button").unbind("click", follow);
@@ -69,39 +81,6 @@ else
 						alert("アンフォローに失敗しました");
 					});
 				}
-				$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/friend/show", {
-					type: "get",
-					dataType: "json",
-					data: {"screen_name": "<?=$user['screen_name']?>"}
-				}).done(function(data) {
-					if (data.is_following) {
-						$("#follow-button")
-							.text("フォロー中")
-							.click(unfollow);
-					} else {
-						$("#follow-button")
-							.text("フォロー")
-							.click(follow);
-					}
-					if (data.is_follower) {
-						$("#friend-status").text("フォローされています。");
-					} else {
-						$("#friend-status").text("フォローされていません。");
-					}
-				}).fail(function(data) {
-					switch(data.responseJSON.error.code) {
-						case 106:
-							$("#friend-status").text("あなたです。");
-							$("#follow-button").css({display: "none"});
-							break;
-						case 201:
-							$("#follow-button").css({display: "none"});
-							break;
-						default:
-							alert("ページの読み込みに失敗しました。再読み込みしてください。");
-							break;
-					}
-				});
 			});
 		</script>
 		<style>

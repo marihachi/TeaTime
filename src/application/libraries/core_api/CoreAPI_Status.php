@@ -7,7 +7,6 @@ class CoreAPI_Status
 	{
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Status_model', 'StatusModel', TRUE);
-		$res = "";
 
 		if (!ApiParamValidate($get, ['status_id']))
 			return;
@@ -29,7 +28,6 @@ class CoreAPI_Status
 	{
 		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Status_model', 'StatusModel', TRUE);
-		$res = "";
 
 		if (!ApiParamValidate($post, ['text']))
 			return;
