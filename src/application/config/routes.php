@@ -54,23 +54,26 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 
 $route['signup'] = 'MainController/signup';
-
 $route['(:any)'] = 'UserController/index/$1';
 $route['status/(:any)'] = 'StatusController/index/$1';
-
 $route['image/status/(:any)'] = 'ImageController/status/$1';
 $route['image/header/(:any)'] = 'ImageController/header/$1';
 $route['image/icon/(:any)'] = 'ImageController/icon/$1';
 
+//
+//  Web APIs
+//
 $route['api/web/account/create'] = 'api/WebAPI_AccountController/create';
 $route['api/web/account/login'] = 'api/WebAPI_AccountController/login';
 $route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
-
-$route['api/web/friend/show'] = 'api/WebAPI_FriendController/show';
-
-$route['api/web/user/follow'] = 'api/WebAPI_FriendController/follow';
-$route['api/web/user/unfollow'] = 'api/WebAPI_FriendController/unfollow';
-
-$route['api/web/status/show'] = 'api/WebAPI_StatusController/show';
+$route['api/web/user/follow'] = 'api/WebAPI_UserController/follow';
+$route['api/web/user/unfollow'] = 'api/WebAPI_UserController/unfollow';
 $route['api/web/status/update'] = 'api/WebAPI_StatusController/update';
 $route['api/web/status/timeline'] = 'api/WebAPI_StatusController/timeline';
+
+//
+// REST APIs
+//
+$route['api/friend/show'] = 'api/UserController/friendshow';
+$route['api/status/show'] = 'api/StatusController/show';
+$route['api/status/timeline'] = 'api/StatusController/timeline';
