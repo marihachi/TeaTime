@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<? defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="jp">
 	<head>
@@ -39,9 +39,8 @@
 						alert("アンフォローに失敗しました");
 					});
 				}
-				<?php
-				if (!$isVisibleFollowButton)
-					echo '$("#follow-button").css({display: "none"});';
+				<?
+				echo !$isVisibleFollowButton ? '$("#follow-button").css({display: "none"});' : '';
 				echo $isFollowing
 					? '$("#follow-button").text("フォロー中").click(unfollow);'
 					: '$("#follow-button").text("フォロー").click(follow);';
@@ -85,9 +84,7 @@
 					<h1><?=$target["name"]." (@".$target["screen_name"].")"?></h1>
 					<button class="btn btn-defalut" id="follow-button">フォロー</button>
 					<div>
-						<p id="friend-status">
-							<?=$followState?>
-						</p>
+						<p id="friend-status"><?=$followState?></p>
 					</div>
 					<div>
 						<p>bio: <?=$target["bio"]?></p>
