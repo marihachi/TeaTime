@@ -9,13 +9,6 @@
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script>
 		<script>
 			$(function() {
-				<?php
-				if (!$isVisibleFollowButton) echo '$("#follow-button").css({display: "none"});';
-				if ($isFollowing)
-					echo '$("#follow-button").text("フォロー中").click(unfollow);';
-				else
-					echo '$("#follow-button").text("フォロー").click(follow);';
-				?>
 				var follow = function() {
 					$("#follow-button").unbind("click", follow);
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/follow", {
@@ -46,6 +39,14 @@
 						alert("アンフォローに失敗しました");
 					});
 				}
+				<?php
+				if (!$isVisibleFollowButton)
+					echo '$("#follow-button").css({display: "none"});';
+				echo $isFollowing
+					? '$("#follow-button").text("フォロー中").click(unfollow);'
+					: '$("#follow-button").text("フォロー").click(follow);';
+				?>
+
 			});
 		</script>
 		<style>

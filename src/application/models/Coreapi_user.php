@@ -61,7 +61,7 @@ class Coreapi_user extends CI_Model
 					$srcId = $meUserId;
 					$destId = $destUser['id'];
 
-					if ($this->FriendModel->Find($srcId, $destId) === false)
+					if ($this->FriendModel->Find($srcId, $destId) !== false)
 					{
 						if ($this->FriendModel->Destroy($srcId, $destId))
 							$res = BuildSuccessResponse('successful.');
