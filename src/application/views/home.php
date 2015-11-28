@@ -21,13 +21,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$('#logout-message').text('ログアウトに失敗しました');
 					});
 				});
-				
 				// status-update
-				$('#post-button').click(function() {
+				$('.home-postbar > form').submit(function(event) {
+					event.preventDefault();
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/update", {
 						type: 'post',
 						dataType: 'json',
-						data: {"text": $('#post-text-box').val()}
+						data: {"text": $('.home-postbar > form > textarea').val()}
 					}).done(function() {
 						alert('投稿成功');
 					}).fail(function() {
@@ -37,121 +37,132 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			});
 		</script>
 		<style>
-			a {
-				color: #fff;
+			* {
+				box-sizing: border-box;
+				color: rgba(0, 0, 0, 0.7);
+				margin: 0;
+				padding: 0;
 			}
-			a:active, a:hover, a:focus {
-				color: #ddd;
-			}
-			.jumbotron {
-				color: #333;
-				padding-top: 94px;
-				
-				background: url("/tea-time/bg002.jpg");
-				background-position: center center;
-				background-size: cover;
-				background-repeat: no-repeat;
-				background-attachment: fixed;
-			}
-			.home-nav .btn-teatime-white {
-				background: transparent;
-				border: 1px solid #fff;
-				color: #fff;
-				border: 2px solid rgb(255, 255, 255);
-				margin: 6px 0;
-			}
-			.btn-teatime-1:hover,
-			.btn-teatime-1:active,
-			.btn-teatime-1:focus{
-				color: #eee;
-				outline: none;
-			}
-			
-			.home-nav {
-				position: fixed;
-				top: 0px;
-				right: 0px;
-				left: 0px;
-				z-index: 1030;
-				color: #fff;
-				background: #D59B6D;
-				background-color: rgba(255, 173, 67, 0.62);
-			}
-			.home-nav a.item {
+			main {
 				display: block;
+			}
+			a , a:active, a:focus {
+				color: rgba(255,255,255, 0.7);
+				text-decoration: none;
+			}
+			a:hover {
+				color: rgba(255,255,255, 0.9);
+			}
+			body {
+				background-color: rgba(235, 217, 207, 1);
+			}
+			body > main {
+				padding-left: 200px;
+			}
+			.home-sidebar {
+				background-color: rgb(209, 170, 147);
+				width: 200px;
+				height: 100%;
+				padding: 20px 0;
+				position: fixed;
+				top: 0;
+				left: 0;
+			}
+			.home-sidebar > ul > li > a {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				height: 50px;
+				padding: 0px 35px;
 				font-size: 16px;
-				padding: 12px;
-				text-align: center;
 			}
-			.home-nav input.form-control {
-				color: #555;
-				background-color: rgba(255, 255, 255, 0.6);
-				box-shadow: none;
-				border: 2px solid rgb(255, 255, 255);
-				height: 36px;
-				margin: 6px 0;
+			.home-postbar {
+				background-color: rgba(245, 236, 231, .9);
+				width: 100%;
+				position: fixed;
+				bottom: 0;
 			}
-			.home-nav input.form-control:focus {
-				border-color: #FF9A00;
-				box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 4px rgba(251, 152, 0, 0.6);
+			.home-postbar > form {
+				display: flex;
+				justify-content: space-between;
 			}
-			.no-padding-right {
-				padding-right: 0;
+			.home-postbar > form > textarea {
+				border: 0;
+				padding: 5px;
+				background-color: transparent;
+				width: 100%;
+				height: 100px;
+				resize: none;
 			}
-			.no-padding-left {
-				padding-left: 0;
+			.home-postbar > form > input[type=submit] {
+				border: 1px solid rgb(209, 170, 147);
+				background-color: transparent;
+				width: 60px;
 			}
 			.entry {
-				border: 2px solid white;
-				border-radius: 5px;
+				display: flex;
+				background-color: rgba(255, 255, 255, .2);
 				margin: 10px;
-				padding: 10px;
-				color: #fff;
-				background-color: rgba(255, 173, 67, 0.62);
+				padding: 10px 0px;
 			}
-			.entry img {
+			.entry > .user-icon {
 				height: 64px;
 				width: 64px;
+				margin: 0px 15px;
+			}
+			.entry > div > header {
+				display: flex;
+				align-items: baseline;
+			}
+			.entry > div > header > h1 {
+				font-size: 20px;
+				font-weight: 400;
+			}
+			.entry > div > header > h2 {
+				font-size: 16px;
+				font-weight: 400;
+				color: rgba(0, 0, 0, 0.5);
+			}
+			.entry > div > header > h2:before {
+				content: "(@";
+				margin-left: 5px;
+			}
+			.entry > div > header > h2:after {
+				content: ")";
+			}
+			.entry > div > p {
+				
 			}
 		</style>
 	</head>
-	<body class=jumbotron>
-		<nav class="home-nav">
-			<div class=container>
-				<div class=row>
-					<div class="col-xs-4">
-						<div class="col-xs-6 no-padding-right"><a href="#" class=item>Home</a></div>
-						<div class="col-xs-6 no-padding-left"><a href="#" class=item>Mention</a></div>
-					</div>
-					<div class="col-xs-6">
-						<div class=input-group>
-							<input type=text class="form-control" id="post-text-box">
-							<span class="input-group-btn">
-								<button class="btn btn-teatime-white" id="post-button">Post</button>
-							</span>
-						</div>
-					</div>
-					<div class="col-xs-2">
-						<button id=logout-button class="btn btn-teatime-white">ログアウト</button>
-					</div>
-				</div>
-			</div>
-		</nav>
+	<body>
+		<aside class="home-sidebar">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Mention</a></li>
+			</ul>
+		</aside>
 		<main>
-			<div class=container>
-				<div class=row>
-					<div class="entry col-xs-4">
-						<img src="/tea-time/icon_test.jpg" />
-						This is status sample.
-					</div>
-				</div>
-				<div class=row>
-					<div class="entry col-xs-4">
-						<img src="/tea-time/icon_test.jpg" />
-						This is status sample.
-					</div>
-				</div>
-			</div>
+			<ol class="timeline">
+				<li>
+					<article class="entry">
+						<img class="user-icon" src="/tea-time/icon_test.jpg">
+						<div>
+							<header>
+								<h1>Test</h1>
+								<h2>ScreenName</h2>
+							</header>
+							<p>Home is in preparation.</p>
+						</div>
+					</article>
+				</li>
+			</ol>
 		</main>
+		<footer class="home-postbar">
+			<form>
+				<textarea placeholder="ここに投稿内容を入力します"></textarea>
+				<input type="submit" value="Post">
+			</form>
+		</footer>
 	</body>
 </html>
