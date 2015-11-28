@@ -10,7 +10,7 @@ function BuildErrorResponse($httpCode, $errorCode, $data)
 	if (is_array($data))
 		$res['error'][] = $data;
 	else
-		$res['error']['message'] = $message;
+		$res['error']['message'] = $data;
 		
 	return json_encode($res);
 }
@@ -20,7 +20,7 @@ function BuildSuccessResponse($data)
 	http_response_code(200);
 
 	if (is_array($data))
-		$res[] = $data;
+		$res = $data;
 	else
 		$res["message"] = $data;
 
@@ -30,5 +30,5 @@ function BuildSuccessResponse($data)
 function IsSuccessResponse($json)
 {
 	$res = json_decode($json, true);
-	return !array_key_exists("error", $resArray);
+	return !array_key_exists("error", $res);
 }

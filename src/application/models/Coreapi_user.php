@@ -1,11 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CoreAPI_User
+class Coreapi_user extends CI_Model
 {
 	public function follow($meScreenName, $meUserId, $post)
 	{
-		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Account_model', 'AccountModel', TRUE);
 		$this->load->model('Friend_model', 'FriendModel', TRUE);
 
@@ -46,7 +45,6 @@ class CoreAPI_User
 
 	public function unfollow($meScreenName, $meUserId, $post)
 	{
-		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Account_model', 'AccountModel', TRUE);
 		$this->load->model('Friend_model', 'FriendModel', TRUE);
 
@@ -87,35 +85,34 @@ class CoreAPI_User
 
 	public function friendstatus($meScreenName, $meUserId, $get)
 	{
-		header("Content-Type: application/json; charset=utf-8");
-		$this->load->model('Account_model', 'AccountModel', TRUE);
-		$this->load->model('Friend_model', 'FriendModel', TRUE);
+		$this->load->model("Account_model", "AccountModel", TRUE);
+		$this->load->model("Friend_model", "FriendModel", TRUE);
 
-		if (!ApiParamValidate($get, ['screen_name']))
+		if (!ApiParamValidate($get, ["screen_name"]))
 			return;
 
-		$screenName = urldecode($get['screen_name']);
+		$screenName = urldecode($get["screen_name"]);
 
-		if (preg_match('/^[a-z0-9_]+$/i', $screenName) === 1)
+		if (preg_match("/^[a-z0-9_]+$/i", $screenName) === 1)
 		{
 			if ($screenName !== $meScreenName)
 			{
-				if ($user = $this->AccountModel->FindByScreenName($screenName))
+				if ($target = $this->AccountModel->FindByScreenName($screenName))
 				{
-					$isFollower = !!$this->FriendModel->Find($user['id'], $meUserId);
-					$isFollowing = !!$this->FriendModel->Find($meUserId, $user['id']);
+					$isFollower = !!$this->FriendModel->Find($target["id"], $meUserId);
+					$isFollowing = !!$this->FriendModel->Find($meUserId, $target["id"]);
 
-					$res = BuildErrorResponse([
+					$res = BuildSuccessResponse([
 						"message" => "successful.",
-						"is_follower" => $isFollower, 
+						"is_follower" => $isFollower,
 						"is_following" => $isFollowing
 					]);
 				}
 				else
-					$res = BuildErrorResponse(400, 200, 'User not found.');
+					$res = BuildErrorResponse(400, 200, "User not found.");
 			}
 			else
-				$res = BuildErrorResponse(400, 201, 'This user is you.');
+				$res = BuildErrorResponse(400, 201, "This user is you.");
 		}
 		else
 			$res = BuildErrorResponse(400, 102, "Some invalid parameters.");

@@ -63,13 +63,13 @@ $route['image/icon/(:any)'] = 'ImageController/icon/$1';
 //
 //  Web APIs
 //
-$route['api/web/account/create'] = 'api/WebAPI_AccountController/create';
-$route['api/web/account/login'] = 'api/WebAPI_AccountController/login';
-$route['api/web/account/logout'] = 'api/WebAPI_AccountController/logout';
-$route['api/web/user/follow'] = 'api/WebAPI_UserController/follow';
-$route['api/web/user/unfollow'] = 'api/WebAPI_UserController/unfollow';
-$route['api/web/status/update'] = 'api/WebAPI_StatusController/update';
-$route['api/web/status/timeline'] = 'api/WebAPI_StatusController/timeline';
+$route['api/web/account/create'] = 'api/web/WebAPI_AccountController/create';
+$route['api/web/account/login'] = 'api/web/WebAPI_AccountController/login';
+$route['api/web/account/logout'] = 'api/web/WebAPI_AccountController/logout';
+$route['api/web/user/follow'] = 'api/web/WebAPI_UserController/follow';
+$route['api/web/user/unfollow'] = 'api/web/WebAPI_UserController/unfollow';
+$route['api/web/status/update'] = 'api/web/WebAPI_StatusController/update';
+$route['api/web/status/timeline'] = 'api/web/WebAPI_StatusController/timeline';
 
 //
 // REST APIs

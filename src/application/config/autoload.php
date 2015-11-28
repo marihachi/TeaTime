@@ -87,7 +87,7 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('Helper_CheckReferer', 'Helper_ApiResponseBuilder', 'Helper_ApiParamValidator');
+$autoload['helper'] = array('check_referer', 'api_response_builder', 'api_param_validator');
 
 /*
 | -------------------------------------------------------------------

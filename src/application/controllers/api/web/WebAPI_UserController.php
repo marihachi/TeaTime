@@ -5,7 +5,8 @@ class WebAPI_UserController extends CI_Controller
 {
 	public function follow()
 	{
-		$res = "";
+		header("Content-Type: application/json; charset=utf-8");
+
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -17,7 +18,7 @@ class WebAPI_UserController extends CI_Controller
 			$meUserId = $this->session->userdata('me')['id'];
 			$post = $this->input->post();
 
-			$this->load->library("CoreAPI_User");
+			$this->load->model("Coreapi_user", "CoreAPI_User");
 			$res = $this->CoreAPI_User->follow($meScreenName, $meUserId, $post);
 		}
 		else
@@ -28,7 +29,8 @@ class WebAPI_UserController extends CI_Controller
 
 	public function unfollow()
 	{
-		$res = "";
+		header("Content-Type: application/json; charset=utf-8");
+
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -40,7 +42,7 @@ class WebAPI_UserController extends CI_Controller
 			$meUserId = $this->session->userdata('me')['id'];
 			$post = $this->input->post();
 
-			$this->load->library("CoreAPI_User");
+			$this->load->model("Coreapi_user", "CoreAPI_User");
 			$res = $this->CoreAPI_User->unfollow($meScreenName, $meUserId, $post);
 		}
 		else
@@ -51,7 +53,8 @@ class WebAPI_UserController extends CI_Controller
 
 	public function friendstatus()
 	{
-		$res = "";
+		header("Content-Type: application/json; charset=utf-8");
+
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -63,7 +66,7 @@ class WebAPI_UserController extends CI_Controller
 			$meUserId = $this->session->userdata('me')['id'];
 			$get = $this->input->get();
 			
-			$this->load->library("CoreAPI_User");
+			$this->load->model("Coreapi_user", "CoreAPI_User");
 			$res = $this->CoreAPI_User->friendstatus($meScreenName, $meUserId, $get);
 		}
 		else

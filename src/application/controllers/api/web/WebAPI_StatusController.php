@@ -5,6 +5,7 @@ class WebAPI_StatusController extends CI_Controller
 {
 	public function show()
 	{
+		header("Content-Type: application/json; charset=utf-8");
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -13,7 +14,7 @@ class WebAPI_StatusController extends CI_Controller
 
 		if ($isLogin)
 		{
-			$this->load->library("CoreAPI_Status");
+			$this->load->model("Coreapi_status", "CoreAPI_Status");
 			$res = $this->CoreAPI_Status->show($get);
 		}
 		else
@@ -22,6 +23,7 @@ class WebAPI_StatusController extends CI_Controller
 
 	public function update()
 	{
+		header("Content-Type: application/json; charset=utf-8");
 		if (!CheckReferer($this->agent))
 			return;
 
@@ -32,7 +34,7 @@ class WebAPI_StatusController extends CI_Controller
 		{
 			$meUserId = $this->session->userdata('me')['id'];
 
-			$this->load->library("CoreAPI_Status");
+			$this->load->model("Coreapi_status", "CoreAPI_Status");
 			$res = $this->CoreAPI_Status->update($meUserId, $post);
 		}
 		else

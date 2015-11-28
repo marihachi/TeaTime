@@ -6,10 +6,11 @@ class WebAPI_AccountController extends CI_Controller
 	public function create()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		$this->load->model("Account_model", "AccountModel", TRUE);
-		
+
 		if (!CheckReferer($this->agent))
 			return;
+
+		$this->load->model("Account_model", "AccountModel", true);
 
 		$invalidSN = array(
 			"signup",
@@ -75,10 +76,11 @@ class WebAPI_AccountController extends CI_Controller
 	public function login()
 	{
 		header("Content-Type: application/json; charset=utf-8");
-		$this->load->model("Account_model", "AccountModel", TRUE);
-		
+
 		if (!CheckReferer($this->agent))
 			return;
+
+		$this->load->model("Account_model", "AccountModel", true);
 
 		$post = $this->input->post();
 
@@ -120,7 +122,7 @@ class WebAPI_AccountController extends CI_Controller
 		if (!CheckReferer($this->agent))
 			return;
 
-		$isLogin = $this->session->userdata("is_login")
+		$isLogin = $this->session->userdata("is_login");
 
 		if ($isLogin)
 		{

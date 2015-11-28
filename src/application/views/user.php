@@ -1,46 +1,11 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-$followState = "不明";
-$isFollowing = false;
-$isFollower = false;
-$isVisibleFollowButton = true;
-$this->load->library("CoreAPI_User");
-$res = $this->CoreAPI_User->friendstatus($meScreenName, $meUserId, $get);
-$resArray = json_decode($res, true);
-if (IsSuccessResponse($res))
-{
-	$isFollowing = $resArray['is_following'];
-	$isFollower = $resArray['is_follower'];
-
-	if ($isFollower)
-		$followState = "フォローされています。";
-	else
-		$followState = "フォローされていません。";	
-}
-else
-{
-	switch($resArray['error']['code'])
-	{
-		case 106:
-			$followState = "あなたです。";
-			$isVisibleFollowButton = false;
-			break;
-		case 201:
-			$followState = "";
-			$isVisibleFollowButton = false;
-			break;
-		default:
-			break;
-	}
-}
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="jp">
 	<head>
 		<meta charset=UTF-8>
 		<meta http-equiv=X-UA-Compatible content="IE=edge" />
 		<meta name=viewport content="width=device-width, initial-scale=1" />
-		<title><?=$user['name']?>さんのページ - TeaTime | ティータイムにピッタリなSNS</title>
+		<title><?=$target['name']?>さんのページ - TeaTime | ティータイムにピッタリなSNS</title>
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script>
 		<script>
 			$(function() {
@@ -56,7 +21,7 @@ else
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/follow", {
 						type: "post",
 						dataType: "json",
-						data: {"screen_name": '<?=$user['screen_name']?>'}
+						data: {"screen_name": '<?=$target['screen_name']?>'}
 					}).done(function() {
 						$("#follow-button")
 							.text("フォロー中")
@@ -71,7 +36,7 @@ else
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/unfollow", {
 						type: "post",
 						dataType: "json",
-						data: {"screen_name": "<?=$user['screen_name']?>"}
+						data: {"screen_name": "<?=$target['screen_name']?>"}
 					}).done(function() {
 						$("#follow-button")
 							.text("フォロー")
@@ -115,8 +80,8 @@ else
 		<main>
 			<div id="profile-area">
 				<div id="profile-area-inner">
-					<img id="profile-icon" src="//marihachi.php.xdomain.jp/tea-time/icon_test.jpg"><!-- "//marihachi.php.xdomain.jp/tea-time/image/icon/<?=$user["screen_name"]?>" -->
-					<h1><?=$user["name"]." (@".$user["screen_name"].")"?></h1>
+					<img id="profile-icon" src="//marihachi.php.xdomain.jp/tea-time/icon_test.jpg"><!-- "//marihachi.php.xdomain.jp/tea-time/image/icon/<?=$target["screen_name"]?>" -->
+					<h1><?=$target["name"]." (@".$target["screen_name"].")"?></h1>
 					<button class="btn btn-defalut" id="follow-button">フォロー</button>
 					<div>
 						<p id="friend-status">
@@ -124,13 +89,13 @@ else
 						</p>
 					</div>
 					<div>
-						<p>bio: <?=$user["bio"]?></p>
+						<p>bio: <?=$target["bio"]?></p>
 					</div>
 					<div>
-						<p>Lv: <?=$user["lv"]?></p>
+						<p>Lv: <?=$target["lv"]?></p>
 					</div>
 					<div>
-						<p>Exp: <?=$user["exp"]?></p>
+						<p>Exp: <?=$target["exp"]?></p>
 					</div>
 				</div>
 			</div>

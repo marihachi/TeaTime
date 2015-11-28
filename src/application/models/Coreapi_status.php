@@ -1,11 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CoreAPI_Status
+class Coreapi_status extends CI_Model
 {
 	public function show($get)
 	{
-		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Status_model', 'StatusModel', TRUE);
 
 		if (!ApiParamValidate($get, ['status_id']))
@@ -26,7 +25,6 @@ class CoreAPI_Status
 
 	public function update($meUserId, $post)
 	{
-		header("Content-Type: application/json; charset=utf-8");
 		$this->load->model('Status_model', 'StatusModel', TRUE);
 
 		if (!ApiParamValidate($post, ['text']))
