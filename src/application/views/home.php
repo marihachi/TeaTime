@@ -104,18 +104,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				background-color: rgba(255, 255, 255, .2);
 				margin: 10px;
 				padding: 10px 0px;
+				border-radius: 5px;
 			}
 			.entry > .user-icon {
 				height: 64px;
 				width: 64px;
 				margin: 0px 15px;
+				border: 2px solid rgb(255, 255, 255);
+				border-radius: 5px;
 			}
 			.entry > div > header {
 				display: flex;
 				align-items: baseline;
 			}
 			.entry > div > header > h1 {
-				font-size: 20px;
+				font-size: 18px;
 				font-weight: 400;
 			}
 			.entry > div > header > h2 {
