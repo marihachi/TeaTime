@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						dataType: 'json',
 						data: {"text": $('.home-postbar > form > textarea').val()}
 					}).done(function() {
-						alert('投稿成功');
+						alert('投稿されました');
 					}).fail(function() {
 						alert('投稿に失敗しました');
 					});
@@ -43,9 +43,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				margin: 0;
 				padding: 0;
 			}
-			main {
-				display: block;
-			}
 			a , a:active, a:focus {
 				color: rgba(255,255,255, 0.7);
 				text-decoration: none;
@@ -56,8 +53,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			body {
 				background-color: rgba(235, 217, 207, 1);
 			}
-			body > main {
+			main {
+				display: block;
 				padding-left: 200px;
+				padding-bottom: 100px;
 			}
 			.home-sidebar {
 				background-color: rgb(209, 170, 147);
@@ -95,7 +94,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				resize: none;
 			}
 			.home-postbar > form > input[type=submit] {
-				border: 1px solid rgb(209, 170, 147);
+				border: 1px solid rgb(183, 123, 87);
+				color: rgb(183, 123, 87);
 				background-color: transparent;
 				width: 60px;
 			}
@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<h1>Test</h1>
 								<h2>ScreenName</h2>
 							</header>
-							<p>Home is in preparation.</p>
+							<p>Homeは現在準備中です！</p>
 						</div>
 					</article>
 				</li>
