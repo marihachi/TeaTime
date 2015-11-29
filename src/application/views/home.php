@@ -11,14 +11,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script>
 			$(function() {
 				// logout
-				$('#logout-button').click(function() {
+				$('#logout-button').click(function(event) {
+					event.preventDefault();
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
 						type: 'get',
 						dataType: 'json'
 					}).done(function() {
 						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
 					}).fail(function() {
-						$('#logout-message').text('ログアウトに失敗しました');
+						alert('ログアウトに失敗しました');
 					});
 				});
 				// status-update
@@ -39,16 +40,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<style>
 			* {
 				box-sizing: border-box;
-				color: rgba(0, 0, 0, 0.7);
+				color: rgba(5, 5, 5, 0.7);
 				margin: 0;
 				padding: 0;
 			}
 			a , a:active, a:focus {
-				color: rgba(255,255,255, 0.7);
+				color: rgba(250,250,250, 0.7);
 				text-decoration: none;
 			}
 			a:hover {
-				color: rgba(255,255,255, 0.9);
+				color: rgba(250,250,250, 0.9);
 			}
 			body {
 				background-color: rgba(235, 217, 207, 1);
@@ -71,9 +72,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				display: flex;
 				align-items: center;
 				justify-content: flex-start;
-				height: 50px;
 				padding: 0px 35px;
+				height: 50px;
 				font-size: 16px;
+			}
+			.home-sidebar > ul > li > button {
+				height: 50px;
+				width: 100%;
+				border: 1px solid rgba(250, 250, 250, .2);
+				background-color: transparent;
+				color: rgba(250, 250, 250, .7);
+			}
+			.home-sidebar > ul > li > button:hover {
+				color: rgba(250,250,250, 0.9);
 			}
 			.home-postbar {
 				background-color: rgba(245, 236, 231, .9);
@@ -101,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			.entry {
 				display: flex;
-				background-color: rgba(255, 255, 255, .2);
+				background-color: rgba(250, 250, 250, .2);
 				margin: 10px;
 				padding: 10px 0px;
 				border-radius: 5px;
@@ -110,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				height: 64px;
 				width: 64px;
 				margin: 0px 15px;
-				border: 2px solid rgb(255, 255, 255);
+				border: 2px solid rgb(250, 250, 250);
 				border-radius: 5px;
 			}
 			.entry > div > header {
@@ -124,7 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			.entry > div > header > h2 {
 				font-size: 16px;
 				font-weight: 400;
-				color: rgba(0, 0, 0, 0.5);
+				color: rgba(5, 5, 5, 0.5);
 			}
 			.entry > div > header > h2:before {
 				content: "(@";
@@ -141,8 +152,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<body>
 		<aside class="home-sidebar">
 			<ul>
-				<li><a href="#">Home</a></li>
+				<li><a href="">Home</a></li>
 				<li><a href="#">Mention</a></li>
+				<li><a href="" id="logout-button">ログアウト</a></li>
 			</ul>
 		</aside>
 		<main>
