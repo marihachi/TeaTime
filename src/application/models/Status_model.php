@@ -3,10 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Status_model extends CI_Model
 {
+	public function GenerateStatusId()
+	{
+		$baseTime = 1448722800000;
+		$nowTime = floor(microtime(true) * 1000);
+
+		return $nowTime - $baseTime;
+	}
+	
 	public function Create($userId, $text, $imageCount, $replyToId = null)
 	{
 		$data = [];
-		$data["id"] = md5(uniqid(rand(), 1));
+		$data["id"] = $this->GenerateStatusId();
 		$data["userId"] = $userId;
 		$data["text"] = $text;
 		$data["imageCount"] = $imageCount;
