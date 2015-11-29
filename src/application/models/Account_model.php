@@ -5,7 +5,7 @@ class Account_model extends CI_Model
 {
 	public function Create($screenName, $password, $name, $bio)
 	{
-		$data = array();
+		$data = [];
 		$data["screen_name"] = $screenName;
 		$data["name"] = $name;
 		$data["bio"] = $bio;
@@ -22,7 +22,7 @@ class Account_model extends CI_Model
 
 	public function Update($screenName = null, $name = null, $bio = null, $password = null)
 	{
-		$data = array();
+		$data = [];
 		if ($screenName !== null)
 			$data["screen_Name"] = $screenName;
 		if ($name !== null)
@@ -37,7 +37,7 @@ class Account_model extends CI_Model
 
 	public function FindByScreenName($screenName)
 	{
-		$data = array();
+		$data = [];
 		$data["screen_name"] = $screenName;
 		
 		$query = $this->db->get_where('tea_time_accounts', $data, 1);

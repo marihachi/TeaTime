@@ -4,46 +4,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Friend_model extends CI_Model
 {
 	// フォロー関係を作成
-	public function Create($srcAccountId, $destAccountId)
+	public function Create($srcUserId, $destUserId)
 	{
 		$data = array();
-		$data["src_account_id"] = $srcAccountId;
-		$data["dest_account_id"] = $destAccountId;
+		$data["src_user_id"] = $srcUserId;
+		$data["dest_user_id"] = $destUserId;
 
 		if($this->db->insert('tea_time_friends', $data))
 			return $data;
 		else
 			return false;
 	}
-
 	// フォロー関係を破棄
-	public function Destroy($srcAccountId, $destAccountId)
+	public function Destroy($srcUserId, $destUserId)
 	{
-		$data = array();
-		$data["src_account_id"] = $srcAccountId;
-		$data["dest_account_id"] = $destAccountId;
-
+		$data = [
+			"src_user_id" => $srcUserId,
+			"dest_user_id" => $destUserId
+		];
 		return !!$this->db->delete('tea_time_friends', $data);
 	}
-
-	public function Find($srcAccountId, $destAccountId)
+	// 
+	public function IsExist($srcUserId, $destUserId)
 	{
-		$data = array();
-		$data["src_account_id"] = $srcAccountId;
-		$data["dest_account_id"] = $destAccountId;
-
+		$data = [
+			"src_user_id" => $srcUserId,
+			"dest_user_id" => $destUserId
+		];
 		$query = $this->db->get_where('tea_time_friends', $data);
-		if ($query->num_rows() > 0)
-			return $query->result()[0];
-		else
-			return false;
+		return $query->num_rows() > 0;
 	}
 
 	// 対象をフォローしているユーザーの一覧を取得
-	public function GetFollowers($targetAccountId)
+	public function GetFollowers($targetUserId)
 	{
 		$data = array();
-		$data["dest_account_id"] = $targetAccountId;
+		$data["dest_user_id"] = $targetUserId;
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
@@ -53,10 +49,10 @@ class Friend_model extends CI_Model
 	}
 
 	// 対象がフォローしているユーザーの一覧を取得
-	public function GetFollowings($targetAccountId)
+	public function GetFollowings($targetUserId)
 	{
 		$data = array();
-		$data["src_account_id"] = $targetAccountId;
+		$data["src_user_id"] = $targetUserId;
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)

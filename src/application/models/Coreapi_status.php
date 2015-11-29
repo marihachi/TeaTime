@@ -22,7 +22,6 @@ class Coreapi_status extends CI_Model
 
 		return $res;
 	}
-
 	public function update($meUserId, $post)
 	{
 		$this->load->model('Status_model', 'StatusModel', TRUE);
