@@ -52,6 +52,8 @@ class WebAPI_StatusController extends CI_Controller
 
 		if ($isLogin)
 		{
+			$meUserId = $this->session->userdata('me')['id'];
+
 			$this->load->model("Coreapi_status", "CoreAPI_Status");
 			$res = $this->CoreAPI_Status->timeline($meUserId, $get);
 		}

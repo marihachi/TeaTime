@@ -48,15 +48,18 @@ class Coreapi_status extends CI_Model
 	{
 		$this->load->model('Status_model', 'StatusModel', TRUE);
 
-		$sinceCursor = array_key_exists('since_cursor', $get) ? $get['since_cursor'] : null;
-		$untilCursor = array_key_exists('until_cursor', $get) ? $get['until_cursor'] : null;
+		$limit = array_key_exists('limit', $get) ? ($get['limit'] <= 30 ? $get['limit'] : 30) : 20;
+		$sinceId = array_key_exists('since_id', $get) ? $get['since_id'] : null;
+		$untilId = array_key_exists('until_id', $get) ? $get['until_id'] : null;
 
-		if ($statuses = $this->StatusModel->Find($meUserId, 20, $sinceCursor, $untilCursor))
+		if ($statuses = $this->StatusModel->Find($meUserId, $limit, $sinceId, $untilId))
 			$res = BuildSuccessResponse([
 				"message" => "successful.",
 				'statuses' => $statuses
 			]);
 		else
 			$res = BuildErrorResponse(500, 105, 'Failed to execute.');
+
+		return $res;
 	}
 }

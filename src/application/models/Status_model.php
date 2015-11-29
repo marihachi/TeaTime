@@ -39,16 +39,7 @@ class Status_model extends CI_Model
 		else
 			return false;
 	}
-	public function FindByCursor($cursor)
-	{
-		$data = ["cursor" => $cursor];
-		$query = $this->db->get_where('tea_time_statuses', $data, 1);
-		if ($query->num_rows() > 0)
-			return (array)$query->result()[0];
-		else
-			return false;
-	}
-	public function Find($userId, $limit = 20, $sinceCursor = null, $untilCursor = null)
+	public function Find($userId, $limit = 20, $sinceId = null, $untilId = null)
 	{
 		$where = [];
 
@@ -57,17 +48,10 @@ class Status_model extends CI_Model
 
 		$limit = ($limit === null) ? 10 : $limit;
 		
-		if ($sinceCursor !== null)
-			if ($status = $this->FindByCursor($sinceCursor))
-				$where["id >"] = $status["id"];
-			else
-				return false;
-
-		if ($untilCursor !== null)
-			if ($status = $this->FindByCursor($untilCursor))
-				$where["id <"] = $status["id"];
-			else
-				return false;
+		if ($sinceId !== null)
+			$where["id >"] = $sinceId;
+		else if ($untilId !== null)
+			$where["id <"] = $untilId;
 
 		$query = $this->db->get_where('tea_time_statuses', $where, $limit);
 		if ($query->num_rows() > 0)
