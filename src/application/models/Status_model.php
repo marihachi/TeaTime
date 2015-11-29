@@ -39,21 +39,23 @@ class Status_model extends CI_Model
 		else
 			return false;
 	}
-	public function Find($userId, $limit = 20, $sinceId = null, $untilId = null)
+	public function Find($userIds, $limit = null, $sinceId = null, $untilId = null)
 	{
 		$where = [];
 
-		if ($userId !== null)
+		if ($userIds !== null && is_array($userIds))
+		foreach ($userIds as $userId)
 			$where["userId"] = $userId;
 
-		$limit = ($limit === null) ? 10 : $limit;
+		$limit = ($limit === null) ? 20 : $limit;
 
 		if ($sinceId !== null)
 			$where["id >"] = $sinceId;
 		else if ($untilId !== null)
 			$where["id <"] = $untilId;
 
-		$query = $this->db->get_where('tea_time_statuses', $where, $limit);
+		$this->db->from("tea_time_statuses")->where($where)->limit($limit)->order_by("id", "desc");
+		$query = $this->db->get();
 		if ($query->num_rows() > 0)
 			return (array)$query->result();
 		else

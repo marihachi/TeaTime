@@ -9,7 +9,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<title>ホーム - TeaTime | ティータイムにピッタリなSNS</title>
 		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
 		<script>
+			var statusBuilder = {
+				analyze: function(statusObject) {
+					var li = $("<li>");
+					var entry = $('<article class="entry">');
+					var userIcon = $('<img class="user-icon" src="/tea-time/icon_test.jpg">');
+					var div = $('<div>');
+					var header = $('<header>');
+					var h1 = $('<h1>');
+					var h2 = $('<h2>');
+					var p = $('<p>');
+					li.append(
+						entry.append(
+							userIcon
+						).append(
+							div.append(
+								header.append(
+									h1.append("名前")
+								).append(
+									h2.append("ScreenName")
+								)
+							).append(
+								p.append(statusObject.text)
+							)
+						)
+					);
+					return li;
+				},
+				build: function(statusObjects) {
+					statusObjects.forEach(function(e, i, a) {
+						$("ol.timeline").append(statusBuilder.analyze(e));
+					});
+				},
+			};
 			$(function() {
+				$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
+					type: 'get',
+					dataType: 'json'
+				}).done(function(res) {
+					statusBuilder.build(res.statuses);
+				}).fail(function() {
+					alert('ログアウトに失敗しました');
+				});
+				
 				// logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
@@ -56,17 +98,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			main {
 				display: block;
-				padding-left: 200px;
+				padding-left: 160px;
 				padding-bottom: 100px;
 			}
 			.home-sidebar {
 				background-color: rgb(209, 170, 147);
-				width: 200px;
+				width: 160px;
 				height: 100%;
 				padding: 20px 0;
 				position: fixed;
 				top: 0;
 				left: 0;
+			}
+			.home-sidebar > ul > li {
+				list-style: none;
 			}
 			.home-sidebar > ul > li > a {
 				display: flex;
@@ -109,6 +154,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: rgb(183, 123, 87);
 				background-color: transparent;
 				width: 60px;
+			}
+			.timeline > li {
+				list-style: none;
 			}
 			.entry {
 				display: flex;
@@ -164,10 +212,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<img class="user-icon" src="/tea-time/icon_test.jpg">
 						<div>
 							<header>
-								<h1>Test</h1>
-								<h2>ScreenName</h2>
+								<h1>お知らせ</h1>
+								<h2>Information</h2>
 							</header>
-							<p>Homeは現在準備中です！</p>
+							<p>Homeは現在テスト中です！投稿して遊んでね！</p>
 						</div>
 					</article>
 				</li>
