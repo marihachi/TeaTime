@@ -47,7 +47,7 @@ class Status_model extends CI_Model
 			$where["userId"] = $userId;
 
 		$limit = ($limit === null) ? 10 : $limit;
-		
+
 		if ($sinceId !== null)
 			$where["id >"] = $sinceId;
 		else if ($untilId !== null)
