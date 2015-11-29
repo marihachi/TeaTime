@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Coreapi_user extends CI_Model
 {
+	// フォローします
 	public function follow($meScreenName, $meUserId, $post)
 	{
 		$this->load->model('Account_model', 'AccountModel', TRUE);
@@ -21,7 +22,7 @@ class Coreapi_user extends CI_Model
 					$srcId = $meUserId;
 					$destId = $destUser['id'];
 
-					if ($this->FriendModel->Find($srcId, $destId) === false)
+					if ($this->FriendModel->IsExist($srcId, $destId) === false)
 					{
 						if ($this->FriendModel->Create($srcId, $destId))
 							$res = BuildSuccessResponse("successful.");
@@ -42,7 +43,7 @@ class Coreapi_user extends CI_Model
 
 		return $res;
 	}
-
+	// アンフォローします
 	public function unfollow($meScreenName, $meUserId, $post)
 	{
 		$this->load->model('Account_model', 'AccountModel', TRUE);
@@ -61,7 +62,7 @@ class Coreapi_user extends CI_Model
 					$srcId = $meUserId;
 					$destId = $destUser['id'];
 
-					if ($this->FriendModel->Find($srcId, $destId) !== false)
+					if ($this->FriendModel->IsExist($srcId, $destId) !== false)
 					{
 						if ($this->FriendModel->Destroy($srcId, $destId))
 							$res = BuildSuccessResponse('successful.');
@@ -82,7 +83,7 @@ class Coreapi_user extends CI_Model
 
 		return $res;
 	}
-
+	// フォロー関係を返します
 	public function friendstatus($meScreenName, $meUserId, $get)
 	{
 		$this->load->model("Account_model", "AccountModel", TRUE);
