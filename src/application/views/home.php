@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}).done(function(res) {
 					statusBuilder.build(res.statuses);
 				}).fail(function() {
-					alert('ログアウトに失敗しました');
+					alert('ステータス取得に失敗しました');
 				});
 				
 				// logout
