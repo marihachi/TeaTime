@@ -24,7 +24,7 @@ class Friend_model extends CI_Model
 		];
 		return !!$this->db->delete('tea_time_friends', $data);
 	}
-	// 
+	// フォロー関係が存在するかどうかを取得します
 	public function IsExist($srcUserId, $destUserId)
 	{
 		$data = [
@@ -32,7 +32,7 @@ class Friend_model extends CI_Model
 			"dest_user_id" => $destUserId
 		];
 		$query = $this->db->get_where('tea_time_friends', $data);
-		return $query->num_rows() > 0;
+		return !!$query->num_rows() > 0;
 	}
 
 	// 対象をフォローしているユーザーの一覧を取得

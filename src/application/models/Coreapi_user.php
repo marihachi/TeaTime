@@ -99,8 +99,8 @@ class Coreapi_user extends CI_Model
 			{
 				if ($target = $this->AccountModel->FindByScreenName($screenName))
 				{
-					$isFollower = !!$this->FriendModel->Find($target["id"], $meUserId);
-					$isFollowing = !!$this->FriendModel->Find($meUserId, $target["id"]);
+					$isFollower = $this->FriendModel->IsExist($target["id"], $meUserId);
+					$isFollowing = $this->FriendModel->IsExist($meUserId, $target["id"]);
 
 					$res = BuildSuccessResponse([
 						"message" => "successful.",
