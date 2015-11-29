@@ -10,7 +10,6 @@ class Status_model extends CI_Model
 
 		return $nowTime - $baseTime;
 	}
-	
 	public function Create($userId, $text, $imageCount, $replyToId = null)
 	{
 		$data = [];
@@ -37,6 +36,42 @@ class Status_model extends CI_Model
 		$query = $this->db->get_where('tea_time_statuses', $data, 1);
 		if ($query->num_rows() > 0)
 			return (array)$query->result()[0];
+		else
+			return false;
+	}
+	public function FindByCursor($cursor)
+	{
+		$data = ["cursor" => $cursor];
+		$query = $this->db->get_where('tea_time_statuses', $data, 1);
+		if ($query->num_rows() > 0)
+			return (array)$query->result()[0];
+		else
+			return false;
+	}
+	public function Find($userId, $limit = 20, $sinceCursor = null, $untilCursor = null)
+	{
+		$where = [];
+
+		if ($userId !== null)
+			$where["userId"] = $userId;
+
+		$limit = ($limit === null) ? 10 : $limit;
+		
+		if ($sinceCursor !== null)
+			if ($status = $this->FindByCursor($sinceCursor))
+				$where["id >"] = $status["id"];
+			else
+				return false;
+
+		if ($untilCursor !== null)
+			if ($status = $this->FindByCursor($untilCursor))
+				$where["id <"] = $status["id"];
+			else
+				return false;
+
+		$query = $this->db->get_where('tea_time_statuses', $where, $limit);
+		if ($query->num_rows() > 0)
+			return (array)$query->result();
 		else
 			return false;
 	}
