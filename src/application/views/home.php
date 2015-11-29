@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								header.append(
 									h1.append("名前")
 								).append(
-									h2.append("ScreenName")
+									h2.append("id: " + statusObject.userId)
 								)
 							).append(
 								p.append(statusObject.text)
@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				// status-timeline
 				var cursorId = null;
-				function updateTimeline() {
+				(function updateTimeline() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
@@ -57,9 +57,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					});
 					setTimeout(function() {
 						updateTimeline();
-					}, 10000);
-				}
-				updateTimeline();
+					}, 5000);
+				})();
 				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
