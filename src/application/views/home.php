@@ -38,21 +38,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				},
 				build: function(statusObjects) {
 					statusObjects.forEach(function(e, i, a) {
-						$("ol.timeline").append(statusBuilder.analyze(e));
+						$("ol.timeline").prepend(statusBuilder.analyze(e));
 					});
 				},
 			};
 			$(function() {
-				$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
-					type: 'get',
-					dataType: 'json'
-				}).done(function(res) {
-					statusBuilder.build(res.statuses);
-				}).fail(function() {
-					alert('ステータス取得に失敗しました');
-				});
-				
-				// logout
+				// status-timeline
+				var cursorId = null;
+				function updateTimeline() {
+					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
+						type: 'get',
+						dataType: 'json',
+						data: {"since_id": cursorId}
+					}).done(function(res) {
+						cursorId = res.statuses[0].id;
+						res.statuses.reverse();
+						statusBuilder.build(res.statuses);
+					});
+					setTimeout(function() {
+						updateTimeline();
+					}, 10000);
+				}
+				updateTimeline();
+				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
@@ -71,8 +79,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						type: 'post',
 						dataType: 'json',
 						data: {"text": $('.home-postbar > form > textarea').val()}
-					}).done(function() {
-						alert('投稿されました');
+					}).done(function(res) {
+						cursorId = res.status.id;
+						statusBuilder.build([res.status]);
+						$('.home-postbar > form > textarea').val("");
 					}).fail(function() {
 						alert('投稿に失敗しました');
 					});
@@ -207,7 +217,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</aside>
 		<main>
 			<ol class="timeline">
-				<li>
+				<!--<li>
 					<article class="entry">
 						<img class="user-icon" src="/tea-time/icon_test.jpg">
 						<div>
@@ -218,7 +228,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<p>Homeは現在テスト中です！投稿して遊んでね！</p>
 						</div>
 					</article>
-				</li>
+				</li>-->
 			</ol>
 		</main>
 		<footer class="home-postbar">
