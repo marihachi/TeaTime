@@ -17,6 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var div = $('<div>');
 					var header = $('<header>');
 					var h1 = $('<h1>');
+					var a_sn = $('<a>');
 					var h2 = $('<h2>');
 					var p = $('<p>');
 					li.append(
@@ -25,9 +26,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						).append(
 							div.append(
 								header.append(
-									h1.append("名前")
-								).append(
-									h2.append("id: " + statusObject.userId)
+									a_sn.attr(
+										{ href: statusObject.user.screen_name }
+									).append(
+										h1.append(statusObject.user.name)
+									).append(
+										h2.append(statusObject.user.screen_name)
+									)
 								)
 							).append(
 								p.append(statusObject.text)
@@ -44,14 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			};
 			$(function() {
 				// status-timeline
-				var cursorId = null;
+				var sinceId = 0;
 				(function updateTimeline() {
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
-						data: {'since_id': cursorId}
+						data: {'since_id': sinceId}
 					}).done(function(res) {
-						cursorId = res.statuses[0].id;
+						sinceId = res.statuses[0].id;
 						res.statuses.reverse();
 						statusBuilder.build(res.statuses);
 					});
@@ -94,16 +99,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: rgba(5, 5, 5, 0.7);
 				margin: 0;
 				padding: 0;
+				word-wrap: break-word;
 			}
 			a , a:active, a:focus {
-				color: rgba(250,250,250, 0.7);
+				color: rgba(5, 5, 5, 0.7);
 				text-decoration: none;
 			}
 			a:hover {
-				color: rgba(250,250,250, 0.9);
+				color: rgba(5, 5, 5, 0.9);
 			}
 			body {
 				background-color: rgba(235, 217, 207, 1);
+			}
+			body > div {
+				top: 0 !important;
+				left: auto !important;
+				right: 0 !important;
 			}
 			main {
 				display: block;
@@ -118,6 +129,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				position: fixed;
 				top: 0;
 				left: 0;
+			}
+			.home-sidebar a ,
+			.home-sidebar a:active,
+			.home-sidebar a:focus {
+				color: rgba(250,250,250, 0.7);
+				text-decoration: none;
+			}
+			.home-sidebar a:hover {
+				color: rgba(250,250,250, 0.9);
 			}
 			.home-sidebar > ul > li {
 				list-style: none;
@@ -181,24 +201,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				border: 2px solid rgb(250, 250, 250);
 				border-radius: 5px;
 			}
-			.entry > div > header {
+			.entry > div > header > a {
 				display: flex;
 				align-items: baseline;
 			}
-			.entry > div > header > h1 {
+			.entry > div > header h1 {
 				font-size: 18px;
 				font-weight: 400;
 			}
-			.entry > div > header > h2 {
+			.entry > div > header h2 {
 				font-size: 16px;
 				font-weight: 400;
 				color: rgba(5, 5, 5, 0.5);
 			}
-			.entry > div > header > h2:before {
+			.entry > div > header h2:before {
 				content: "(@";
 				margin-left: 5px;
 			}
-			.entry > div > header > h2:after {
+			.entry > div > header h2:after {
 				content: ")";
 			}
 			.entry > div > p {
@@ -210,7 +230,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<aside class="home-sidebar">
 			<ul>
 				<li><a href="">Home</a></li>
-				<li><a href="">Mention</a></li>
+				<li><a href="i/mentions">Mention</a></li>
 				<li><a href="" id="logout-button">ログアウト</a></li>
 			</ul>
 		</aside>
