@@ -33,13 +33,18 @@ class Coreapi_status extends CI_Model
 
 		$text = urldecode($post["text"]);
 
-		if ($status = $this->StatusModel->Create($meUserId, $text, 0))
-			$res = BuildSuccessResponse([
-				"message" => "successful.",
-				'status' => $status
-			]);
+		if (strlen($text) <= 400)
+		{
+			if ($status = $this->StatusModel->Create($meUserId, $text, 0))
+				$res = BuildSuccessResponse([
+					"message" => "successful.",
+					'status' => $status
+				]);
+			else
+				$res = BuildErrorResponse(500, 105, 'Failed to execute.');
+		}
 		else
-			$res = BuildErrorResponse(500, 105, 'Failed to execute.');
+			$res = BuildErrorResponse(400, 100, 'text is too long.');
 
 		return $res;
 	}

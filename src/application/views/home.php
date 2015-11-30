@@ -3,15 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="jp">
 	<head>
-		<meta charset=UTF-8>
-		<meta http-equiv=X-UA-Compatible content="IE=edge" />
-		<meta name=viewport content="width=device-width, initial-scale=1" />
-		<title>ホーム - TeaTime | ティータイムにピッタリなSNS</title>
-		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>TeaTime</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script>
 			var statusBuilder = {
 				analyze: function(statusObject) {
-					var li = $("<li>");
+					var li = $('<li>');
 					var entry = $('<article class="entry">');
 					var userIcon = $('<img class="user-icon" src="/tea-time/icon_test.jpg">');
 					var div = $('<div>');
@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				},
 				build: function(statusObjects) {
 					statusObjects.forEach(function(e, i, a) {
-						$("ol.timeline").prepend(statusBuilder.analyze(e));
+						$('ol.timeline').prepend(statusBuilder.analyze(e));
 					});
 				},
 			};
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
-						data: {"since_id": cursorId}
+						data: {'since_id': cursorId}
 					}).done(function(res) {
 						cursorId = res.statuses[0].id;
 						res.statuses.reverse();
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					});
 					setTimeout(function() {
 						updateTimeline();
-					}, 5000);
+					}, 10000);
 				})();
 				// account-logout
 				$('#logout-button').click(function(event) {
@@ -210,7 +210,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<aside class="home-sidebar">
 			<ul>
 				<li><a href="">Home</a></li>
-				<li><a href="#">Mention</a></li>
+				<li><a href="">Mention</a></li>
 				<li><a href="" id="logout-button">ログアウト</a></li>
 			</ul>
 		</aside>
