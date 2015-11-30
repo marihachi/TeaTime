@@ -66,9 +66,11 @@ class Status_model extends CI_Model
 		$limit = ($limit === null) ? 20 : $limit;
 
 		if ($sinceId !== null)
-			$where["id >"] = $sinceId;
+			if (!!$this->FindById($sinceId))
+				$where["id >"] = $sinceId;
 		else if ($untilId !== null)
-			$where["id <"] = $untilId;
+			if (!!$this->FindById($untilId))
+				$where["id <"] = $untilId;
 
 		$this->db->from("tea_time_statuses")->where($where)->limit($limit)->order_by("id", "desc");
 		$query = $this->db->get();

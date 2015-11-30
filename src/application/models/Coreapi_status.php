@@ -57,13 +57,11 @@ class Coreapi_status extends CI_Model
 		$sinceId = array_key_exists('since_id', $get) ? $get['since_id'] : null;
 		$untilId = array_key_exists('until_id', $get) ? $get['until_id'] : null;
 
-		if ($statuses = $this->StatusModel->Find(null, $limit, $sinceId, $untilId))
-			$res = BuildSuccessResponse([
-				"message" => "successful.",
-				'statuses' => $statuses
-			]);
-		else
-			$res = BuildErrorResponse(500, 105, 'Failed to execute.');
+		$statuses = $this->StatusModel->Find(null, $limit, $sinceId, $untilId);
+		$res = BuildSuccessResponse([
+			"message" => "successful.",
+			'statuses' => !$statuses ? [] : $statuses
+		]);
 
 		return $res;
 	}
