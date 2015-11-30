@@ -10,9 +10,20 @@ class Status_model extends CI_Model
 
 		return $nowTime - $baseTime;
 	}
-	public function EscapeStatus($status)
+	public function Escape($status)
 	{
 		$status["text"] = html_escape($status["text"]);
+		return $status;
+	}
+	public function Build($status)
+	{
+		$this->load->model("Account_model", "AccountModel", TRUE);
+
+		$status = $this->Escape($status);
+
+		$user = $this->AccountModel->FindById($status["userId"]);
+		unset($user["password_hash"]);
+		$status["user"] = $user;
 		return $status;
 	}
 	public function Create($userId, $text, $imageCount, $replyToId = null)
@@ -40,7 +51,7 @@ class Status_model extends CI_Model
 		$data = ["id" => $id];
 		$query = $this->db->get_where('tea_time_statuses', $data, 1);
 		if ($query->num_rows() > 0)
-			return $this->EscapeStatus($query->result_array()[0]);
+			return $this->Build($query->result_array()[0]);
 		else
 			return false;
 	}
@@ -64,7 +75,7 @@ class Status_model extends CI_Model
 		if ($query->num_rows() > 0)
 		{
 			return array_map(function($s) {
-				return $this->EscapeStatus($s);
+				return $this->Build($s);
 			}, $query->result_array());
 		}
 		else

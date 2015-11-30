@@ -17,7 +17,7 @@ class Account_model extends CI_Model
 			return false;
 		}
 		$query = $this->db->get_where('tea_time_accounts', array('screen_name' => $screenName), 1);
-		return (array)$query->result()[0];
+		return $query->result_array()[0];
 	}
 
 	public function Update($screenName = null, $name = null, $bio = null, $password = null)
@@ -43,7 +43,7 @@ class Account_model extends CI_Model
 		$query = $this->db->get_where('tea_time_accounts', $data, 1);
 		if ($query->num_rows() > 0)
 		{
-			$user = (array)$query->result()[0];
+			$user = $query->result_array()[0];
 			return $user;
 		}
 		else
@@ -57,7 +57,7 @@ class Account_model extends CI_Model
 		$query = $this->db->get_where('tea_time_accounts', array('id' => $id), 1);
 		if ($query->num_rows() > 0)
 		{
-			$user = (array)$query->result()[0];
+			$user = $query->result_array()[0];
 			return $user;
 		}
 		else
