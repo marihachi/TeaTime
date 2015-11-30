@@ -10,20 +10,14 @@ class Status_model extends CI_Model
 
 		return $nowTime - $baseTime;
 	}
-	public function Escape($status)
-	{
-		$status["text"] = html_escape($status["text"]);
-		return $status;
-	}
 	public function Build($status)
 	{
 		$this->load->model("Account_model", "AccountModel", TRUE);
-
-		$status = $this->Escape($status);
-
+		$status["text"] = html_escape($status["text"]);
 		$user = $this->AccountModel->FindById($status["userId"]);
 		unset($user["password_hash"]);
 		$status["user"] = $user;
+
 		return $status;
 	}
 	public function Create($userId, $text, $imageCount, $replyToId = null)
