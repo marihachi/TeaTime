@@ -215,11 +215,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				color: rgba(5, 5, 5, 0.5);
 			}
 			.entry > div > header h2:before {
-				content: "(@";
+				content: "@";
 				margin-left: 5px;
-			}
-			.entry > div > header h2:after {
-				content: ")";
 			}
 			.entry > div > p {
 				
