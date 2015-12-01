@@ -43,7 +43,13 @@ class Friend_model extends CI_Model
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
-			return $query->result_array();
+		{
+			$result = $query->result_array();
+			return array_map(function($r)
+			{
+				return $r["src_user_id"];
+			}, $result);
+		}
 		else
 			return false;
 	}
@@ -56,7 +62,13 @@ class Friend_model extends CI_Model
 
 		$query = $this->db->get_where('tea_time_friends', $data);
 		if ($query->num_rows() > 0)
-			return $query->result_array();
+		{
+			$result = $query->result_array();
+			return array_map(function($r)
+			{
+				return $r["dest_user_id"];
+			}, $result);
+		}
 		else
 			return false;
 	}
