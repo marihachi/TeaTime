@@ -14,7 +14,7 @@ class Status_model extends CI_Model
 	{
 		$this->load->model("Account_model", "AccountModel", TRUE);
 		$status["text"] = html_escape($status["text"]);
-		$user = $this->AccountModel->FindById($status["userId"]);
+		$user = $this->AccountModel->FindById($status["user_id"]);
 		unset($user["password_hash"]);
 		$status["user"] = $user;
 
@@ -24,11 +24,11 @@ class Status_model extends CI_Model
 	{
 		$data = [];
 		$data["id"] = $this->GenerateStatusId();
-		$data["userId"] = $userId;
+		$data["user_id"] = $userId;
 		$data["text"] = $text;
-		$data["imageCount"] = $imageCount;
+		$data["image_count"] = $imageCount;
 		if ($replyToId !== null)
-			$data["replyToId"] = $replyToId;
+			$data["reply_to_id"] = $replyToId;
 
 		if ($this->db->insert('tea_time_statuses', $data))
 			return $this->FindById($data["id"]);
@@ -53,20 +53,23 @@ class Status_model extends CI_Model
 	{
 		$where = [];
 
-		if ($userIds !== null && is_array($userIds))
-		foreach ($userIds as $userId)
-			$where["userId"] = $userId;
-
 		$limit = ($limit === null) ? 20 : $limit;
 
 		if ($sinceId !== null)
 			if (!!$this->FindById($sinceId))
 				$where["id >"] = $sinceId;
+
 		else if ($untilId !== null)
 			if (!!$this->FindById($untilId))
 				$where["id <"] = $untilId;
 
-		$this->db->from("tea_time_statuses")->where($where)->limit($limit)->order_by("id", "desc");
+		$this->db
+			->from("tea_time_statuses")
+			->where($where)
+			->where_in("user_id", $userIds)
+			->limit($limit)
+			->order_by("id", "desc");
+
 		$query = $this->db->get();
 		if ($query->num_rows() > 0)
 		{

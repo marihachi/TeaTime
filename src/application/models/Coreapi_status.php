@@ -48,16 +48,21 @@ class Coreapi_status extends CI_Model
 
 		return $res;
 	}
-	// タイムラインを返します
+	// ホームタイムラインを返します
 	public function timeline($meUserId, $get)
 	{
 		$this->load->model('Status_model', 'StatusModel', TRUE);
+		$this->load->model('Friend_model', 'FriendModel', TRUE);
 
 		$limit = array_key_exists('limit', $get) ? ($get['limit'] <= 30 ? $get['limit'] : 30) : 20;
 		$sinceId = array_key_exists('since_id', $get) ? $get['since_id'] : null;
 		$untilId = array_key_exists('until_id', $get) ? $get['until_id'] : null;
 
-		$statuses = $this->StatusModel->Find(null, $limit, $sinceId, $untilId);
+		$timelineUsers = $this->FriendModel->GetFollowings($meUserId);
+		$timelineUsers[] = $meUserId;
+
+		$statuses = $this->StatusModel->Find($timelineUsers, $limit, $sinceId, $untilId);
+
 		$res = BuildSuccessResponse([
 			"message" => "successful.",
 			'statuses' => !$statuses ? [] : $statuses
