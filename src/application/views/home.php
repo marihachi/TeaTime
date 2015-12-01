@@ -16,9 +16,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var userIcon = $('<img class="user-icon" src="/tea-time/icon_test.jpg">');
 					var div = $('<div>');
 					var header = $('<header>');
-					var h1 = $('<h1>');
-					var a_sn = $('<a>');
-					var h2 = $('<h2>');
+					var user_name = $('<span class="user-name">');
+					var a = $('<a>');
+					var user_screen_name = $('<span class="user-screen-name">');
 					var p = $('<p>');
 					li.append(
 						entry.append(
@@ -26,12 +26,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						).append(
 							div.append(
 								header.append(
-									a_sn.attr(
+									a.attr(
 										{ href: statusObject.user.screen_name }
 									).append(
-										h1.append(statusObject.user.name)
+										user_name.append(statusObject.user.name)
 									).append(
-										h2.append(statusObject.user.screen_name)
+										user_screen_name.append(statusObject.user.screen_name)
 									)
 								)
 							).append(
@@ -201,20 +201,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				border: 2px solid rgb(250, 250, 250);
 				border-radius: 5px;
 			}
-			.entry > div > header > a {
-				display: flex;
-				align-items: baseline;
-			}
-			.entry > div > header h1 {
+			.entry > div > header .user-name {
 				font-size: 18px;
-				font-weight: 400;
 			}
-			.entry > div > header h2 {
+			.entry > div > header .user-screen-name {
 				font-size: 16px;
-				font-weight: 400;
 				color: rgba(5, 5, 5, 0.5);
 			}
-			.entry > div > header h2:before {
+			.entry > div > header .user-screen-name:before {
 				content: "@";
 				margin-left: 5px;
 			}
@@ -238,8 +232,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<img class="user-icon" src="/tea-time/icon_test.jpg">
 						<div>
 							<header>
-								<h1>お知らせ</h1>
-								<h2>Information</h2>
+								<span class="user-name">お知らせ</span>
+								<span class="user-screen-name">Information</span>
 							</header>
 							<p>Homeは現在テスト中です！投稿して遊んでね！</p>
 						</div>

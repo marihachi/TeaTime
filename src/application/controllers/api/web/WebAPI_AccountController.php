@@ -19,7 +19,7 @@ class WebAPI_AccountController extends CI_Controller
 		);
 
 		$post = $this->input->post();
-		
+
 		if (!ApiParamValidate($post, ['screen_name', 'password', 'name', 'bio']))
 			return;
 
@@ -51,6 +51,9 @@ class WebAPI_AccountController extends CI_Controller
 							$data["is_login"] = true;
 							$data["me"] = $resUser;
 							$this->session->set_userdata($data);
+
+							$this->load->model("Coreapi_user", "CoreAPI_User");
+							$res = $this->CoreAPI_User->follow("mrhc", 1, ["screen_name" => $resUser["screen_name"]]);
 						}
 						else
 							$res = BuildErrorResponse(500, 105, "Failed to execute.");
@@ -60,10 +63,8 @@ class WebAPI_AccountController extends CI_Controller
 			if (!$isValidScreenName)
 			{
 				$res = BuildErrorResponse(400, 104, [
-					"error" => [
-						"message" => "Invalid parameter.",
-						"parameter" => "screen_name"
-					]
+					"message" => "Invalid parameter.",
+					"parameter" => "screen_name"
 				]);
 			}
 		}
