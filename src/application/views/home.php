@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<title>TeaTime</title>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script>
+			var timelineTimerHandler = null;
 			var statusBuilder = {
 				analyze: function(statusObject) {
 					var li = $('<li>');
@@ -54,6 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.ajax("/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
+						timeout: 10000,
 						data: {'since_id': sinceId}
 					}).done(function(res) {
 						if (res.statuses.length !== 0)
@@ -62,17 +64,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							res.statuses.reverse();
 							statusBuilder.build(res.statuses);
 						}
+					}).fail(function(res) {
+						if (timelineTimerHandler !== null)
+							clearInterval(timelineTimerHandler);
+						alert("タイムライン情報の取得に失敗しました。再読み込みしてください。");
 					});
-					setTimeout(function() {
-						updateTimeline();
-					}, 10000);
 				})();
+				timelineTimerHandler = setInterval(function() {
+					updateTimeline();
+				}, 10000);
 				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
 					$.ajax("/tea-time/api/web/account/logout", {
 						type: 'get',
-						dataType: 'json'
+						dataType: 'json',
+						timeout: 10000
 					}).done(function() {
 						location.href = "/tea-time/";
 					}).fail(function() {
@@ -85,10 +92,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.ajax("/tea-time/api/web/status/update", {
 						type: 'post',
 						dataType: 'json',
+						timeout: 10000,
 						data: {"text": $('.home-postbar > form > textarea').val()}
 					}).done(function(res) {
+						MainTimelineTimer = null;
 						sinceId = res.status.id;
 						statusBuilder.build([res.status]);
+						updateTimeline();
 						$('.home-postbar > form > textarea').val("");
 					}).fail(function() {
 						alert('投稿に失敗しました');
