@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				},
 				build: function(statusObjects) {
 					statusObjects.forEach(function(e, i, a) {
-						$('ol.timeline').prepend(statusBuilder.analyze(e));
+						$('#user-timeline').prepend(statusBuilder.analyze(e));
 					});
 				},
 			};
@@ -51,14 +51,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// status-timeline
 				var sinceId = 0;
 				(function updateTimeline() {
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/timeline", {
+					$.ajax("/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
 						data: {'since_id': sinceId}
 					}).done(function(res) {
-						sinceId = res.statuses[0].id;
-						res.statuses.reverse();
-						statusBuilder.build(res.statuses);
+						if (res.statuses.length !== 0)
+						{
+							sinceId = res.statuses[0].id;
+							res.statuses.reverse();
+							statusBuilder.build(res.statuses);
+						}
 					});
 					setTimeout(function() {
 						updateTimeline();
@@ -67,11 +70,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/logout", {
+					$.ajax("/tea-time/api/web/account/logout", {
 						type: 'get',
 						dataType: 'json'
 					}).done(function() {
-						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
+						location.href = "/tea-time/";
 					}).fail(function() {
 						alert('ログアウトに失敗しました');
 					});
@@ -79,12 +82,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// status-update
 				$('.home-postbar > form').submit(function(event) {
 					event.preventDefault();
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/status/update", {
+					$.ajax("/tea-time/api/web/status/update", {
 						type: 'post',
 						dataType: 'json',
 						data: {"text": $('.home-postbar > form > textarea').val()}
 					}).done(function(res) {
-						cursorId = res.status.id;
+						sinceId = res.status.id;
 						statusBuilder.build([res.status]);
 						$('.home-postbar > form > textarea').val("");
 					}).fail(function() {
@@ -215,19 +218,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			.entry > div > p {
 				
 			}
+			#info-timeline .entry {
+				border: 1px solid rgb(183, 123, 0);
+			}
 		</style>
 	</head>
 	<body>
 		<aside class="home-sidebar">
 			<ul>
-				<li><a href="">Home</a></li>
-				<li><a href="i/mentions">Mention</a></li>
-				<li><a href="" id="logout-button">ログアウト</a></li>
+				<li><a href="/tea-time/" title="ホームを表示します。">Home</a></li>
+				<li><a href="/tea-time/i/mentions" title="ごめんなさい。まだ未実装です。">Mention</a></li>
+				<li><a href="" id="logout-button" title="TeaTimeからサインアウトします。">Signout</a></li>
 			</ul>
 		</aside>
 		<main>
-			<ol class="timeline">
-				<!--<li>
+			<ol class="timeline" id="info-timeline">
+				<li>
 					<article class="entry">
 						<img class="user-icon" src="/tea-time/icon_test.jpg">
 						<div>
@@ -235,10 +241,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<span class="user-name">お知らせ</span>
 								<span class="user-screen-name">Information</span>
 							</header>
-							<p>Homeは現在テスト中です！投稿して遊んでね！</p>
+							<p>Homeは現在テスト中です！投稿して遊んでね！<br />作者アカウント: <a href="/tea-time/mrhc">@mrhc</a></p>
 						</div>
 					</article>
-				</li>-->
+				</li>
+			</ol>
+			<ol class="timeline" id="user-timeline">
 			</ol>
 		</main>
 		<footer class="home-postbar">
