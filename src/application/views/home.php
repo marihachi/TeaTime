@@ -51,11 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				// status-timeline
 				var sinceId = 0;
-				(function updateTimeline() {
+				function updateTimeline() {
 					$.ajax("/tea-time/api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
-						timeout: 10000,
+						timeout: 5000,
 						data: {'since_id': sinceId}
 					}).done(function(res) {
 						if (res.statuses.length !== 0)
@@ -69,10 +69,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							clearInterval(timelineTimerHandler);
 						alert("タイムライン情報の取得に失敗しました。再読み込みしてください。");
 					});
-				})();
+				};
+				updateTimeline();
 				timelineTimerHandler = setInterval(function() {
 					updateTimeline();
-				}, 10000);
+				}, 5000);
 				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
