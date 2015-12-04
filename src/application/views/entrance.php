@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				$('#login-form').submit(function(event) {
 					event.preventDefault();
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/login", {
+					$.ajax("api/web/account/login", {
 						type: 'post',
 						data: $(this).serialize(),
 						dataType: 'json',
@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							withCredentials: true
 						}
 					}).done(function(){
-						location.href = "http://marihachi.php.xdomain.jp/tea-time/";
+						location.href = "<?=$config['base_url']?>";
 					}).fail(function(){
 						$('#login-message').text("ログインに失敗しました");
 					});
@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				font-family: "Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","Meiryo UI","Meiryo, メイリオ","sans-serif";
 			}
 			.jumbotron {
-				background: url("/tea-time/bg002.jpg");
+				background: url("bg002.jpg");
 				background-position: center center;
 				background-size: cover;
 				background-repeat: no-repeat;

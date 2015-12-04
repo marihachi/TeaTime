@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			body {
 				background: #D59B6D;
 				color: #fff;
-				background: url("/tea-time/bg002.jpg");
+				background: url("bg002.jpg");
 				background-position: center center;
 				background-size: cover;
 				background-repeat: no-repeat;
@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$(function() {
 				$('#account-create-form').submit(function(event) {
 					event.preventDefault();
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/account/create", {
+					$.ajax("api/web/account/create", {
 						type: 'post',
 						data: $(this).serialize(),
 						dataType: 'json',
@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							withCredentials: true
 						}
 					}).done(function(){
-						location.href = "http://marihachi.php.xdomain.jp/tea-time";
+						location.href = "<?=$config['base_url']?>";
 					}).fail(function(){
 						$("#message").text("サインアップに失敗しました。入力情報を確認してください。");
 					});

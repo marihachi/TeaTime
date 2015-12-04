@@ -14,13 +14,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				analyze: function(statusObject) {
 					var li = $('<li>');
 					var entry = $('<article class="entry">');
-					var userIcon = $('<img class="user-icon" src="/tea-time/icon_test.jpg">');
+					var userIcon = $('<img class="user-icon" src="icon_test.jpg">');
 					var div = $('<div>');
 					var header = $('<header>');
 					var user_name = $('<span class="user-name">');
 					var a = $('<a>');
 					var user_screen_name = $('<span class="user-screen-name">');
 					var p = $('<p>');
+					var time = $('<time>');
 					li.append(
 						entry.append(
 							userIcon
@@ -34,6 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									).append(
 										user_screen_name.append(statusObject.user.screen_name)
 									)
+								).append(
+									time.append(statusObject.created_at)
 								)
 							).append(
 								p.append(statusObject.text)
@@ -52,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// status-timeline
 				var sinceId = 0;
 				function updateTimeline() {
-					$.ajax("/tea-time/api/web/status/timeline", {
+					$.ajax("api/web/status/timeline", {
 						type: 'get',
 						dataType: 'json',
 						timeout: 5000,
@@ -77,12 +80,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// account-logout
 				$('#logout-button').click(function(event) {
 					event.preventDefault();
-					$.ajax("/tea-time/api/web/account/logout", {
+					$.ajax("api/web/account/logout", {
 						type: 'get',
 						dataType: 'json',
 						timeout: 10000
 					}).done(function() {
-						location.href = "/tea-time/";
+						location.href = "<?=$config['base_url']?>";
 					}).fail(function() {
 						alert('ログアウトに失敗しました');
 					});
@@ -90,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// status-update
 				$('.home-postbar > form').submit(function(event) {
 					event.preventDefault();
-					$.ajax("/tea-time/api/web/status/update", {
+					$.ajax("api/web/status/update", {
 						type: 'post',
 						dataType: 'json',
 						timeout: 10000,
@@ -222,6 +225,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				font-size: 16px;
 				color: rgba(5, 5, 5, 0.5);
 			}
+			.entry > div > header time {
+				margin-left: 10px;
+			}
 			.entry > div > header .user-screen-name:before {
 				content: "@";
 				margin-left: 5px;
@@ -237,8 +243,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<body>
 		<aside class="home-sidebar">
 			<ul>
-				<li><a href="/tea-time/" title="ホームを表示します。">Home</a></li>
-				<li><a href="/tea-time/i/mentions" title="ごめんなさい。まだ未実装です。">Mention</a></li>
+				<li><a href="<?=$config['base_url']?>" title="ホームを表示します。">Home</a></li>
+				<li><a href="<?=$config['base_url']?>i/mentions" title="ごめんなさい。まだ未実装です。">Mention</a></li>
 				<li><a href="" id="logout-button" title="TeaTimeからサインアウトします。">Signout</a></li>
 			</ul>
 		</aside>
@@ -246,13 +252,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<ol class="timeline" id="info-timeline">
 				<li>
 					<article class="entry">
-						<img class="user-icon" src="/tea-time/icon_test.jpg">
+						<img class="user-icon" src="icon_test.jpg">
 						<div>
 							<header>
 								<span class="user-name">お知らせ</span>
-								<span class="user-screen-name">Information</span>
 							</header>
-							<p>Homeは現在テスト中です！投稿して遊んでね！<br />作者アカウント: <a href="/tea-time/mrhc">@mrhc</a></p>
+							<p>Homeは現在テスト中です！投稿して遊んでね！<br />作者アカウント: <a href="<?=$config['base_url']?>mrhc">@mrhc</a></p>
 						</div>
 					</article>
 				</li>

@@ -11,7 +11,7 @@
 			$(function() {
 				var follow = function() {
 					$("#follow-button").unbind("click", follow);
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/follow", {
+					$.ajax("<?=$config['base_url']?>api/web/user/follow", {
 						type: "post",
 						dataType: "json",
 						data: {"screen_name": '<?=$target['screen_name']?>'}
@@ -26,7 +26,7 @@
 				};
 				var unfollow = function() {
 					$("#follow-button").unbind("click", unfollow);
-					$.ajax("http://marihachi.php.xdomain.jp/tea-time/api/web/user/unfollow", {
+					$.ajax("<?=$config['base_url']?>api/web/user/unfollow", {
 						type: "post",
 						dataType: "json",
 						data: {"screen_name": "<?=$target['screen_name']?>"}
@@ -80,7 +80,7 @@
 		<main>
 			<div id="profile-area">
 				<div id="profile-area-inner">
-					<img id="profile-icon" src="//marihachi.php.xdomain.jp/tea-time/icon_test.jpg"><!-- "//marihachi.php.xdomain.jp/tea-time/image/icon/<?=$target["screen_name"]?>" -->
+					<img id="profile-icon" src="<?=$config['base_url']?>icon_test.jpg"><!-- "<?=$config['base_url']?>image/icon/<?=$target["screen_name"]?>" -->
 					<h1><?=$target["name"]." (@".$target["screen_name"].")"?></h1>
 					<button class="btn btn-defalut" id="follow-button">フォロー</button>
 					<div>
