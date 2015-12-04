@@ -2,11 +2,11 @@
 ?><!DOCTYPE html>
 <html lang="jp">
 	<head>
-		<meta charset=UTF-8>
-		<meta http-equiv=X-UA-Compatible content="IE=edge" />
-		<meta name=viewport content="width=device-width, initial-scale=1" />
-		<title><?=$target['name']?>さんのページ - TeaTime | ティータイムにピッタリなSNS</title>
-		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title><?=$target['name']?>さんのページ - TeaTime</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script>
 			$(function() {
 				var follow = function() {
@@ -99,7 +99,7 @@
 			</div>
 		</main>
 		<footer>
-			<p><a href=/tea-time>ホームへ</a></p>
+			<p><a href="<?=$this->config->base_url();?>">ホームへ</a></p>
 		</footer>
 	</body>
 </html>

@@ -3,11 +3,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="jp">
 	<head>
-		<meta charset=UTF-8>
-		<meta http-equiv=X-UA-Compatible content="IE=edge" />
-		<meta name=viewport content="width=device-width, initial-scale=1" />
-		<title>新しいアカウントを作成 - TeaTime | ティータイムにピッタリなSNS</title>
-		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>新しいアカウントを作成 - TeaTime</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$('#account-create-form').submit(function(event) {
+					event.preventDefault();
+					$.ajax("api/web/account/create", {
+						type: 'post',
+						data: $(this).serialize(),
+						dataType: 'json',
+						xhrFields: {
+							withCredentials: true
+						}
+					}).done(function(){
+						location.href = "<?=$this->config->base_url();?>";
+					}).fail(function(){
+						$("#message").text("サインアップに失敗しました。入力情報を確認してください。");
+					});
+				});
+			});
+		</script>
 		<style>
 			body * {
 				box-sizing: border-box;
@@ -66,26 +85,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				background-color: rgba(255, 255, 255, .4);
 			}
 		</style>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script>
-			$(function() {
-				$('#account-create-form').submit(function(event) {
-					event.preventDefault();
-					$.ajax("api/web/account/create", {
-						type: 'post',
-						data: $(this).serialize(),
-						dataType: 'json',
-						xhrFields: {
-							withCredentials: true
-						}
-					}).done(function(){
-						location.href = "<?=$this->config->base_url();?>";
-					}).fail(function(){
-						$("#message").text("サインアップに失敗しました。入力情報を確認してください。");
-					});
-				});
-			});
-		</script>
 	</head>
 	<body>
 		<main>
@@ -109,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 				</form>
 				<span id="message"></span>
-				<p><a href=/tea-time>エントランスへ</a></p>
+				<p><a href="<?=$this->config->base_url();?>">エントランスへ</a></p>
 			</section>
 		</main>
 	</body>

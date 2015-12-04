@@ -3,17 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang=jp>
 	<head>
-		<meta charset=UTF-8 />
-		<meta http-equiv=X-UA-Compatible content="IE=edge" />
-		<meta name=viewport content="width=device-width, initial-scale=1" />
-		<title>TeaTime | ティータイムにピッタリなSNS</title>
-		<link href=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css rel=stylesheet />
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js></script>
-		<script src=//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js></script>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>TeaTime</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script>
 			$(function() {
 				$('#login-form').submit(function(event) {
@@ -95,29 +89,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</style>
 	</head>
 	<body class="container jumbotron">
-		<main class=row>
+		<main class="row">
 			<header>
 			</header>
-			<div class=col-md-8>
-				<article id=main-article class=container>
+			<div class="col-md-8">
+				<article id="main-article" class="container">
 					<h1>TeaTimeへようこそ</h1>
 					<p>ログインもしくは<a href=/tea-time/signup>サインアップ</a>してください。</p>
 					<p>現在TeaTimeは運用に向けてオープンテスト中です。良かったらアカウント作ってね</p>
 				</article>
 			</div>
-			<div class=col-md-4>
-				<div id=login-box class=container>
-					<form id=login-form>
+			<div class="col-md-4">
+				<div id="login-box" class="container">
+					<form id="login-form">
 						<div class="form-group">
 							<label class="control-label" for="username-box">ユーザー名</label>
-							<input type=text class=form-control id=username-box name=screen_name>
+							<input type="text" class="form-control" id="username-box" name="screen_name">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="password-box">パスワード</label>
-							<input type=password class=form-control id=password-box name=password>
+							<input type="password" class="form-control" id="password-box" name="password">
 						</div>
-						<label id=login-message></label>
-						<input id=login-button class="btn btn-orange" type=submit value="ログイン">
+						<label id="login-message"></label>
+						<input id="login-button" class="btn btn-orange" type=submit value="ログイン">
 					</form>
 				</div>
 			</div>
