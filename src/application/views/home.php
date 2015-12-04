@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						dataType: 'json',
 						timeout: 10000
 					}).done(function() {
-						location.href = "<?=$config['base_url']?>";
+						location.href = "<?=$this->config->base_url();?>";
 					}).fail(function() {
 						alert('ログアウトに失敗しました');
 					});
@@ -243,8 +243,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<body>
 		<aside class="home-sidebar">
 			<ul>
-				<li><a href="<?=$config['base_url']?>" title="ホームを表示します。">Home</a></li>
-				<li><a href="<?=$config['base_url']?>i/mentions" title="ごめんなさい。まだ未実装です。">Mention</a></li>
+				<li><a href="<?=$this->config->base_url();?>" title="ホームを表示します。">Home</a></li>
+				<li><a href="<?=$this->config->base_url();?>i/mentions" title="ごめんなさい。まだ未実装です。">Mention</a></li>
 				<li><a href="" id="logout-button" title="TeaTimeからサインアウトします。">Signout</a></li>
 			</ul>
 		</aside>
@@ -257,7 +257,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<header>
 								<span class="user-name">お知らせ</span>
 							</header>
-							<p>Homeは現在テスト中です！投稿して遊んでね！<br />作者アカウント: <a href="<?=$config['base_url']?>mrhc">@mrhc</a></p>
+							<p>Homeは現在テスト中です！投稿して遊んでね！<br />作者アカウント: <a href="<?=$this->config->base_url();?>mrhc">@mrhc</a></p>
 						</div>
 					</article>
 				</li>

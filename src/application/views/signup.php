@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							withCredentials: true
 						}
 					}).done(function(){
-						location.href = "<?=$config['base_url']?>";
+						location.href = "<?=$this->config->base_url();?>";
 					}).fail(function(){
 						$("#message").text("サインアップに失敗しました。入力情報を確認してください。");
 					});
