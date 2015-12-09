@@ -20,8 +20,10 @@ class WebAPI_AccountController extends CI_Controller
 
 		$post = $this->input->post();
 
-		if (!ApiParamValidate($post, ['screen_name', 'password', 'name', 'bio']))
+		if (!ApiParamValidate($post, ['screen_name', 'password', 'name', 'bio'])){
+			echo BuildErrorResponse(400, 102, "Some invalid parameters.");
 			return;
+		}
 
 		$screenName = urldecode($post["screen_name"]);
 		$password = urldecode($post["password"]);
@@ -85,8 +87,10 @@ class WebAPI_AccountController extends CI_Controller
 
 		$post = $this->input->post();
 
-		if (!ApiParamValidate($post, ['screen_name', 'password']))
+		if (!ApiParamValidate($post, ['screen_name', 'password'])){
+			echo BuildErrorResponse(400, 102, "Some invalid parameters.");
 			return;
+		}
 
 		$screenName = urldecode($post["screen_name"]);
 		$password = urldecode($post["password"]);
